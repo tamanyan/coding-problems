@@ -19,5 +19,5 @@ class Solution:
                 return node_map[cursor_id]
             node_map[cursor_id] = cursor
             cursor = cursor.next
-        
+
         return None
