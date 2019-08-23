@@ -17,6 +17,7 @@ c = Counter(strings)
 count = 0
 for i in c.values():
     if i > 1:
+        # conbination iC2
         count += (i * (i - 1)) / 2
 print(int(count))
 # print(functools.reduce(lambda a, b: a + b - 1, c.values()))
