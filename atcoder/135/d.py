@@ -1,24 +1,14 @@
-maps = input()
-people = [0] * len(maps)
+from collections import Counter
 
-counter = 0
-for i in range(len(maps)):
-    if maps[i] == 'R':
-        counter += 1
-        if maps[i+1] == 'L':
-            people[i] += (counter+1) // 2
-            people[i+1] += counter // 2
-    else:
-        counter = 0
+S = input()
+MOD = 10**9 + 7
 
-counter = 0
-for i in range(len(maps) - 1, 0, -1):
-    if maps[i] == 'L':
-        counter += 1
-        if maps[i-1] == 'R':
-            people[i] += (counter+1) // 2
-            people[i-1] += counter // 2
-    else:
-        counter = 0
+c = Counter(S)
+n = c['?']
 
-print(*people)
+for i in range(2 ** n):
+    total = 0
+    print("pattern {}: ".format(i), end="")
+    for j in range(n):
+        if ((i >> j) & 1):
+            print(j)

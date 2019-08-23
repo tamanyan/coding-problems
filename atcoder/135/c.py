@@ -1,19 +1,25 @@
 N = int(input())
-towers = list(map(int, input().split()))
+monsters = list(map(int, input().split()))
+heros = list(map(int, input().split()))
+nums = 0
 
+for i in range(len(heros)):
+    if monsters[i] <= heros[i]:
+        heros[i] -= monsters[i]
+        nums += monsters[i]
+        monsters[i] = 0
 
-for i in reversed(range(len(towers))):
-    if len(towers) <= i+1:
-        continue
+        if monsters[i+1] <= heros[i]:
+            heros[i] -= monsters[i+1]
+            nums += monsters[i+1]
+            monsters[i+1] = 0
+        else:
+            nums += heros[i]
+            monsters[i+1] -= heros[i]
+            heros[i] = 0
+    else:
+        nums += heros[i]
+        monsters[i] -= heros[i]
+        heros[i] = 0
 
-    if towers[i] > towers[i+1]:
-        towers[i] -= 1
-
-# print(towers)
-
-for i in range(1, len(towers)):
-    if towers[i-1] > towers[i]:
-        print('No')
-        exit()
-
-print('Yes')
+print(nums)
