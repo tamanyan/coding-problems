@@ -8,7 +8,6 @@ for _i in range(N):
     i = N-_i
     cur = i * 2
     sum_b = 0
-    # print('i', i)
 
     if i == 0:
         break
