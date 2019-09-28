@@ -1,51 +1,68 @@
-
-from fractions import gcd
-import itertools
+import math
+import os
 import sys
-input = sys.stdin.readline
+from fractions import gcd
+
+if os.getenv("LOCAL"):
+    sys.stdin = open("_in.txt", "r")
+
+sys.setrecursionlimit(2147483647)
+INF = float("inf")
+IINF = 10 ** 18
+MOD = 10 ** 9 + 7
 
 
-# nの素数判定
+def divisor(n):
+    """
+    n の約数をリストで返す
+    :param int n:
+    :rtype: list of int
+    """
+    ret = []
+    for i in range(1, int(n**0.5)+1):
+        if n % i == 0:
+            ret.append(i)
+            if n // i != i:
+                ret.append(n // i)
+    return ret
+
+
+def factorization(n):
+    """
+    素因数分解
+    :param int n:
+    :rtype: list of int
+    """
+    if n <= 1:
+        return []
+
+    ret = []
+    while n > 2 and n % 2 == 0:
+        ret.append(2)
+        n //= 2
+    i = 3
+    while i <= math.sqrt(n):
+        if n % i == 0:
+            ret.append(i)
+            n //= i
+        else:
+            i += 2
+    ret.append(n)
+    return ret
+
+
 def is_prime(n):
+    """
+    nの素数判定
+    :param int n:
+    :rtype: Bool
+    """
     if n == 1:
         return False
     for i in range(2, int(n**0.5)+1):
         if n % i == 0:
             return False
     return True
-
-
-# nの約数列挙
-def divisor(n):
-    ass = []
-    for i in range(1, int(n**0.5)+1):
-        if n % i == 0:
-            ass.append(i)
-            if i**2 == n:
-                continue
-            ass.append(n//i)
-    return ass
-
-
-# 素因数分解
-def factorization(n):
-    arr = []
-    temp = n
-    for i in range(2, int(-(-n**0.5//1))+1):
-        if temp % i == 0:
-            cnt = 0
-            while temp % i == 0:
-                cnt += 1
-                temp //= i
-            arr.append([i, cnt])
-
-    if temp != 1:
-        arr.append([temp, 1])
-
-    if arr == []:
-        arr.append([n, 1])
-
-    return arr
 
 
 def coprime(a, b):
