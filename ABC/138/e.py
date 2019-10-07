@@ -1,32 +1,46 @@
 
 # import sys
 # input = sys.stdin.readline
-from collections import Counter
+import bisect
+
+
+def ch_to_int(c):
+    return ord(c) - 96
 
 
 def main():
     s = input()
     t = input()
-    ts = Counter(s)
-    i = 0
     pos = 0
+    count = 0
+    ch = [[] for i in range(27)]
 
-    while i < len(t):
-        cur = pos % len(s)
-        # print(len(t), i, cur, t[i], s[cur])
+    for i in range(len(s)):
+        ch[ch_to_int(s[i])].append(i)
 
-        if t[i] not in ts:
+    for i in range(len(t)):
+        c = ch_to_int(t[i])
+        li = ch[c]
+
+        if len(li) == 0:
             pos = -1
+            count = 0
             break
 
-        if t[i] == s[cur]:
-            i += 1
-        # else:
-        #     pos = -1
-        #     break
-        pos += 1
+        next_index = bisect.bisect_left(li, pos)
+        # print(next_index, pos, li)
+        if next_index >= len(li):
+            next_pos = li[0]
+            count += 1
+            pos = next_pos + 1
+        else:
+            if pos == li[next_index]:
+                pos += 1
+            else:
+                pos = li[next_index] + 1
+        # print(li, next_index, pos, count)
 
-    print(pos)
+    print(pos + count * len(s))
 
 
 if __name__ == '__main__':
