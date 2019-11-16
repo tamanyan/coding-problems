@@ -7,6 +7,7 @@ from collections import deque
 
 INF = float('inf')
 
+# BFS
 
 def main():
     N = int(input())

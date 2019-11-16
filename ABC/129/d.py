@@ -1,44 +1,45 @@
 MOD = 10 ** 9 + 7
 
+# dfs
 
-# def dfs(graph, start):
-#     options = [(-1, 0), (0, 1), (1, 0), (0, -1)]
-#     W = len(graph)
-#     H = len(graph[0])
-#     ans = 0
+def dfs(graph, start):
+    options = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+    W = len(graph)
+    H = len(graph[0])
+    ans = 0
 
-#     for x in range(len(graph)):
-#         for y in range(len(graph[x])):
-#             if graph[x][y] == '#':
-#                 continue
+    for x in range(len(graph)):
+        for y in range(len(graph[x])):
+            if graph[x][y] == '#':
+                continue
 
-#             val = 1
-#             path = []
-#             stack = [(x, y, options)]
-#             # print(x, y)
+            val = 1
+            path = []
+            stack = [(x, y, options)]
+            # print(x, y)
 
-#             while stack != []:
-#                 v = stack.pop()
+            while stack != []:
+                v = stack.pop()
 
-#                 if v not in path:
-#                     path.append(v)
+                if v not in path:
+                    path.append(v)
 
-#                 for op in v[2]:
-#                     n = (v[0] + op[0], v[1] + op[1], [op])
+                for op in v[2]:
+                    n = (v[0] + op[0], v[1] + op[1], [op])
 
-#                     if n[0] >= 0 and n[0] < W and n[1] >= 0 and n[1] < H:
-#                         f = graph[n[0]][n[1]]
-#                         if n not in path and f == '.':
-#                             stack.append(n)
-#                             val += 1
+                    if n[0] >= 0 and n[0] < W and n[1] >= 0 and n[1] < H:
+                        f = graph[n[0]][n[1]]
+                        if n not in path and f == '.':
+                            stack.append(n)
+                            val += 1
 
-#             ans = max(ans, val)
-#             # print(ans)
+            ans = max(ans, val)
+            # print(ans)
 
-#             if ans == 3999:
-#                 return ans
+            if ans == 3999:
+                return ans
 
-#     return ans
+    return ans
 
 
 def main():

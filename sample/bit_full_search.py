@@ -2,6 +2,8 @@ money = 300
 item = (("みかん", 100), ("りんご", 200), ("ぶどう", 300))
 n = len(item)
 
+# bit全探索
+
 for i in range(2 ** n):
     bag = []
     total = 0
