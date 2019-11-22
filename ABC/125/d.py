@@ -1,5 +1,7 @@
 import math
 
+INF = float("inf")
+
 # Check
 
 def good(N, A):
@@ -32,8 +34,17 @@ def good(N, A):
 def main():
     N = int(input())
     A = list(map(int, input().split()))
+    dp = [[0 for i in range(2)] for i in range(N+1)]
 
-    good(N, A)
+    dp[0][0] = 0
+    dp[0][1] = -INF
+
+    for i in range(N):
+        dp[i+1][0] = max(dp[i][0] + A[i], dp[i][1] - A[i])
+        dp[i+1][1] = max(dp[i][0] - A[i], dp[i][1] + A[i])
+
+    print(dp[N][0])
+    # good(N, A)
 
 
 if __name__ == '__main__':
