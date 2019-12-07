@@ -52,14 +52,18 @@ show_flg = False
 
 
 def main():
-    M1, D1 = MI()
-    M2, D2 = MI()
+    N, T = MI()
+    cur = int(10**9)
 
-    if M1 != M2:
-        print(1)
+    for i in range(N):
+        c, t = MI()
+        if t <= T and cur > c:
+            cur = c
+
+    if cur == 10**9:
+        print('TLE')
     else:
-        print(0)
-
+        print(cur)
 
 
 if __name__ == '__main__':

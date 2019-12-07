@@ -52,14 +52,12 @@ show_flg = False
 
 
 def main():
-    M1, D1 = MI()
-    M2, D2 = MI()
+    S = input()
 
-    if M1 != M2:
-        print(1)
+    if S <= '2019/04/30':
+        print('Heisei')
     else:
-        print(0)
-
+        print('TBD')
 
 
 if __name__ == '__main__':

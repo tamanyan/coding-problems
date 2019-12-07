@@ -41,6 +41,7 @@ def show(*inp, end='\n'):
 YN = ['Yes', 'No']
 MOD = 10**9+7
 inf = float('inf')
+IINF = 10**19
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
@@ -50,16 +51,37 @@ sys.setrecursionlimit(10**6)
 show_flg = False
 # show_flg = True
 
+A = 0
+B = 0
+C = 0
+N = 0
+
+
+def dfs(cur, L, a, b, c):
+    # print(A, B, C)
+    if cur == N:
+        return abs(A - a) + abs(B - b) + abs(C - c) if min(a, b, c) > 0 else IINF
+
+    ret0 = dfs(cur + 1, L, a, b, c)
+    ret1 = dfs(cur + 1, L, a + L[cur], b, c) + (0 if a == 0 else 10)
+    ret2 = dfs(cur + 1, L, a, b + L[cur], c) + (0 if b == 0 else 10)
+    ret3 = dfs(cur + 1, L, a, b, c + L[cur]) + (0 if c == 0 else 10)
+
+    return min(ret0, ret1, ret2, ret3)
+
 
 def main():
-    M1, D1 = MI()
-    M2, D2 = MI()
+    global A
+    global B
+    global C
+    global N
+    N, A, B, C = MI()
+    L = [0] * N
 
-    if M1 != M2:
-        print(1)
-    else:
-        print(0)
+    for i in range(N):
+        L[i] = int(input())
 
+    print(dfs(0, L, 0, 0, 0))
 
 
 if __name__ == '__main__':

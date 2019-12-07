@@ -52,14 +52,14 @@ show_flg = False
 
 
 def main():
-    M1, D1 = MI()
-    M2, D2 = MI()
+    N = int(input())
 
-    if M1 != M2:
-        print(1)
+    if N == 1:
+        print('Hello World')
     else:
-        print(0)
-
+        A = int(input())
+        B = int(input())
+        print(A + B)
 
 
 if __name__ == '__main__':

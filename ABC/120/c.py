@@ -52,14 +52,21 @@ show_flg = False
 
 
 def main():
-    M1, D1 = MI()
-    M2, D2 = MI()
+    S = input()
+    stack = []
+    ans = 0
 
-    if M1 != M2:
-        print(1)
-    else:
-        print(0)
+    for i in range(len(S)):
+        if len(stack) == 0:
+            stack.append(S[i])
+        else:
+            if stack[-1] != S[i]:
+                stack.pop()
+                ans += 2
+            else:
+                stack.append(S[i])
 
+    print(ans)
 
 
 if __name__ == '__main__':
