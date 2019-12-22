@@ -47,46 +47,14 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 
 
-# show_flg = True
 show_flg = False
-
-
-def divisor(n):
-    """
-    n の約数をリストで返す
-    :param int n:
-    :rtype: list of int
-    """
-    ret = []
-    for i in range(1, int(n**0.5)+1):
-        if n % i == 0:
-            ret.append(i)
-            if n // i != i:
-                ret.append(n // i)
-    return ret
-
-
-# N個の最大公約数
-def eucledean(A, N):
-    # A = sorted(A)
-    ans = A[0]
-    for i in range(1, N):
-        ans = gcd(A[i], ans)
-    print(ans)
+# show_flg = True
 
 
 def main():
-    N, M = MI()
-    data = sorted(divisor(M))
-    ans = 1
+    M = I()
 
-    for i in data:
-        c = M // i
-        # print(i, c)
-        if c >= N:
-            ans = i
-
-    print(ans)
+    print(48 - M)
 
 
 if __name__ == '__main__':

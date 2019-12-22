@@ -1,8 +1,7 @@
-
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
-from itertools import permutations, combinations
+from itertools import permutations, combinations, accumulate
 import sys
 import bisect
 import string
@@ -38,55 +37,57 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = ['Yes', 'No']
+YN = ['No', 'Yes']
 MOD = 10**9+7
 inf = float('inf')
+IINF = 10**10
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
 sys.setrecursionlimit(10**6)
+nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
-# show_flg = True
+show_flg = True
 show_flg = False
 
 
-def divisor(n):
+def factorization(n):
     """
-    n の約数をリストで返す
+    素因数分解
     :param int n:
     :rtype: list of int
     """
+    if n <= 1:
+        return []
+
     ret = []
-    for i in range(1, int(n**0.5)+1):
+    while n > 2 and n % 2 == 0:
+        ret.append(2)
+        n //= 2
+    i = 3
+    while i <= math.sqrt(n):
         if n % i == 0:
             ret.append(i)
-            if n // i != i:
-                ret.append(n // i)
+            n //= i
+        else:
+            i += 2
+    ret.append(n)
     return ret
 
 
-# N個の最大公約数
-def eucledean(A, N):
-    # A = sorted(A)
-    ans = A[0]
-    for i in range(1, N):
-        ans = gcd(A[i], ans)
-    print(ans)
-
-
 def main():
-    N, M = MI()
-    data = sorted(divisor(M))
-    ans = 1
+    N = I()
+    n = 5
+    ans = 0
 
-    for i in data:
-        c = M // i
-        # print(i, c)
-        if c >= N:
-            ans = i
-
-    print(ans)
+    if N % 2 == 0:
+        while n <= N:
+            ans += N // n // 2
+            n *= 5
+        print(ans)
+    else:
+        print(0)
 
 
 if __name__ == '__main__':

@@ -3,6 +3,7 @@ import bisect
 from itertools import accumulate
 input = sys.stdin.readline
 
+# 累積和
 
 def cumulative_sum(N, K, a):
     b = list(accumulate([0] + a))
@@ -16,6 +17,7 @@ def cumulative_sum(N, K, a):
 
     print(ans)
 
+# しゃくとり法
 
 def two_pointer(N, K, a):
     ans = 0

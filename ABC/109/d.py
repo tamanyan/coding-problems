@@ -47,46 +47,35 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 
 
-# show_flg = True
 show_flg = False
-
-
-def divisor(n):
-    """
-    n の約数をリストで返す
-    :param int n:
-    :rtype: list of int
-    """
-    ret = []
-    for i in range(1, int(n**0.5)+1):
-        if n % i == 0:
-            ret.append(i)
-            if n // i != i:
-                ret.append(n // i)
-    return ret
-
-
-# N個の最大公約数
-def eucledean(A, N):
-    # A = sorted(A)
-    ans = A[0]
-    for i in range(1, N):
-        ans = gcd(A[i], ans)
-    print(ans)
+# show_flg = True
 
 
 def main():
-    N, M = MI()
-    data = sorted(divisor(M))
-    ans = 1
+    H, W = MI()
+    graph = [None] * H
+    ans = []
 
-    for i in data:
-        c = M // i
-        # print(i, c)
-        if c >= N:
-            ans = i
+    for i in range(H):
+        graph[i] = list(MI())
 
-    print(ans)
+    q = []
+    for i in range(H):
+        range_w = range(W) if i % 2 == 0 else reversed(range(W))
+        for j in range_w:
+            q.append((i, j))
+
+    for idx, (i, j) in enumerate(q):
+        coin = graph[i][j]
+        if coin % 2 == 1 and idx + 1 < len(q):
+            ni, nj = q[idx+1]
+            graph[i][j] -= 1
+            graph[ni][nj] += 1
+            ans.append([i+1, j+1, ni+1, nj+1])
+
+    print(len(ans))
+    for i in range(len(ans)):
+        print(*ans[i])
 
 
 if __name__ == '__main__':

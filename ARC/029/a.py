@@ -41,50 +41,36 @@ def show(*inp, end='\n'):
 YN = ['Yes', 'No']
 MOD = 10**9+7
 inf = float('inf')
+IINF = 10**9
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
 sys.setrecursionlimit(10**6)
 
 
-# show_flg = True
 show_flg = False
-
-
-def divisor(n):
-    """
-    n の約数をリストで返す
-    :param int n:
-    :rtype: list of int
-    """
-    ret = []
-    for i in range(1, int(n**0.5)+1):
-        if n % i == 0:
-            ret.append(i)
-            if n // i != i:
-                ret.append(n // i)
-    return ret
-
-
-# N個の最大公約数
-def eucledean(A, N):
-    # A = sorted(A)
-    ans = A[0]
-    for i in range(1, N):
-        ans = gcd(A[i], ans)
-    print(ans)
+# show_flg = True
 
 
 def main():
-    N, M = MI()
-    data = sorted(divisor(M))
-    ans = 1
+    N = I()
+    data = [0] * N
+    ans = IINF
 
-    for i in data:
-        c = M // i
-        # print(i, c)
-        if c >= N:
-            ans = i
+    for i in range(N):
+        data[i] = I()
+
+    for i in range(2 ** N):
+        a = []
+        b = []
+        # print("pattern {}: ".format(i), end="")
+        for j in range(N):
+            if ((i >> j) & 1):
+                a.append(data[j])
+            else:
+                b.append(data[j])
+
+        ans = min(ans, max(sum(a), sum(b)))
 
     print(ans)
 

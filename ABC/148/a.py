@@ -2,7 +2,7 @@
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
-from itertools import permutations, combinations
+from itertools import permutations, combinations, accumulate
 import sys
 import bisect
 import string
@@ -38,55 +38,31 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = ['Yes', 'No']
+YN = ['No', 'Yes']
 MOD = 10**9+7
 inf = float('inf')
+IINF = 10**10
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
 sys.setrecursionlimit(10**6)
+nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-
-# show_flg = True
 show_flg = False
-
-
-def divisor(n):
-    """
-    n の約数をリストで返す
-    :param int n:
-    :rtype: list of int
-    """
-    ret = []
-    for i in range(1, int(n**0.5)+1):
-        if n % i == 0:
-            ret.append(i)
-            if n // i != i:
-                ret.append(n // i)
-    return ret
-
-
-# N個の最大公約数
-def eucledean(A, N):
-    # A = sorted(A)
-    ans = A[0]
-    for i in range(1, N):
-        ans = gcd(A[i], ans)
-    print(ans)
+# show_flg = True
 
 
 def main():
-    N, M = MI()
-    data = sorted(divisor(M))
-    ans = 1
+    A = I()
+    B = I()
+    ans = {1: True, 2:True, 3:True}
+    ans[A] = False
+    ans[B] = False
 
-    for i in data:
-        c = M // i
-        # print(i, c)
-        if c >= N:
-            ans = i
-
-    print(ans)
+    for i in ans.keys():
+        if ans[i] is True:
+            print(i)
+            return
 
 
 if __name__ == '__main__':
