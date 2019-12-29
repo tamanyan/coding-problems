@@ -18,6 +18,7 @@ def main():
     def f(N):
         return A * N + B * len(str(N))
 
+    # 二分探索
     while r-l > 1:
         c = (l+r) // 2
         if f(c) <= X:
