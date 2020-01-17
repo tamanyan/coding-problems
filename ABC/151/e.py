@@ -7,8 +7,6 @@ import bisect
 import string
 import math
 import time
-from fractions import gcd
-#import random
 
 
 def I(): return int(input())
@@ -48,34 +46,56 @@ sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
-# show_flg = False
 show_flg = True
-
-p = None
-XY = None
-N = None
+show_flg = False
 
 
-def primes(n):
-    is_prime = [1] * (n + 1)
-    is_prime[0] = 0
-    is_prime[1] = 0
-    for i in range(2, int(n**0.5) + 1):
-        if not is_prime[i]:
-            continue
-        for j in range(i * 2, n + 1, i):
-            is_prime[j] = 0
-    return is_prime
+def factorization(n):
+    """
+    素因数分解
+    :param int n:
+    :rtype: list of int
+    """
+    if n <= 1:
+        return []
+
+    ret = []
+    while n > 2 and n % 2 == 0:
+        ret.append(2)
+        n //= 2
+    i = 3
+    while i <= math.sqrt(n):
+        if n % i == 0:
+            ret.append(i)
+            n //= i
+        else:
+            i += 2
+    ret.append(n)
+    return ret
 
 
 def main():
-    X = I()
-    a = primes(10**5+1000)
+    N, K = MI()
+    A = LI()
+    ans = 0
+    A = sorted(A)
+    ARR = list(accumulate([0] + A))
 
-    for i in range(0, 10**5+1000+1):
-        if i >= X and a[i] == 1:
-            print(i)
-            return
+    # for i, d in enumerate(list(itertools.combinations(A, K))):
+    #     print(i, d)
+    #     ans += max(d) - min(d)
+
+    for i in range(N-K+1):
+        # print(i + 1, i + K - 1)
+        start = i + K - 1
+        a = ARR[N] - ARR[start]
+        n = A[i] * (N - (i + K - 1))
+        begin = A[start]
+        end = A[N-1]
+        print(A[i], 'b', begin, 'e', end, 'a', a, 'n', n)
+        ans += a - n
+
+    print(ans)
 
 
 if __name__ == '__main__':

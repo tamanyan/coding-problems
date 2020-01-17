@@ -7,8 +7,6 @@ import bisect
 import string
 import math
 import time
-from fractions import gcd
-#import random
 
 
 def I(): return int(input())
@@ -48,34 +46,52 @@ sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
-# show_flg = False
 show_flg = True
-
-p = None
-XY = None
-N = None
+show_flg = False
 
 
-def primes(n):
-    is_prime = [1] * (n + 1)
-    is_prime[0] = 0
-    is_prime[1] = 0
-    for i in range(2, int(n**0.5) + 1):
-        if not is_prime[i]:
-            continue
-        for j in range(i * 2, n + 1, i):
-            is_prime[j] = 0
-    return is_prime
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+def lcm(a, b):
+    return a*b // gcd(a, b)
+
+
+def lcm_n(A, N):
+    # A = sorted(A)
+    ans = A[0]
+    # for i in range(1, N):
+    #     ans = fractions.gcd(A[i], ans)
+    for i in range(1, N):
+        ans = lcm(ans, A[i])
+    return ans
 
 
 def main():
-    X = I()
-    a = primes(10**5+1000)
+    N, M = MI()
+    a = LI()
 
-    for i in range(0, 10**5+1000+1):
-        if i >= X and a[i] == 1:
-            print(i)
-            return
+    if any([i % 2 for i in a]):
+        print(0)
+        return
+
+    n = lcm_n(a, N)
+    n = n // 2
+
+    if not all([(2 * n // x) % 2 for x in a]):
+        print(0)
+        return
+
+    if n > M:
+        print(0)
+    else:
+        t = M // n
+        if t % 2 == 0:
+            t -= 1
+        print(t // 2 + 1)
 
 
 if __name__ == '__main__':

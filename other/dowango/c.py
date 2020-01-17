@@ -1,14 +1,13 @@
+from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
-from itertools import permutations, combinations
+from itertools import permutations, combinations, accumulate
 import sys
 import bisect
 import string
 import math
 import time
-from fractions import gcd
-#import random
 
 
 def I(): return int(input())
@@ -37,46 +36,49 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = ['Yes', 'No']
+YN = ['No', 'Yes']
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**19
+IINF = 10**10
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
 sys.setrecursionlimit(10**6)
+nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
 # show_flg = False
 show_flg = True
 
+p = None
+XY = None
+N = None
+
 
 def main():
-    S = input()
-    T = input()
-    canditates = []
+    N = I()
+    P = LI()
+    Q = LI()
+    # start = 0
+    # finish = 0
+    data = sorted(list(itertools.permutations(P, N)))
 
-    for i in range(len(S)):
-        idx = 0
-        for j in range(i, len(S)):
-            if idx < len(T) and (S[j] == T[idx] or S[j] == '?'):
-                idx += 1
-            else:
-                break
+    for index, arr in enumerate(data):
+        tmpS = 0
+        tmpE = 0
+        for i in range(N):
+            if P[i] == arr[i]:
+                tmpS += 1
+            if Q[i] == arr[i]:
+                tmpE += 1
 
-        # print(idx, S, len(T))
-        if idx == len(T):
-            canditates.append(S[:i] + T + S[i+len(T):])
-            # print(S[:i], T, S[i+len(T):])
-            # print(i, i+len(T))
+        if tmpS == N:
+            start = index
 
-    if len(canditates) > 0:
-        # print(canditates)
-        canditates = [c.replace("?", "a") for c in canditates]
-        canditates.sort()
-        print(canditates[0])
-    else:
-        print("UNRESTORABLE")
+        if tmpE == N:
+            finish = index
+
+    print(abs(finish - start))
 
 
 if __name__ == '__main__':

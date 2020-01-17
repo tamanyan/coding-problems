@@ -7,8 +7,6 @@ import bisect
 import string
 import math
 import time
-from fractions import gcd
-#import random
 
 
 def I(): return int(input())
@@ -47,35 +45,19 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-
-# show_flg = False
-show_flg = True
-
-p = None
-XY = None
-N = None
-
-
-def primes(n):
-    is_prime = [1] * (n + 1)
-    is_prime[0] = 0
-    is_prime[1] = 0
-    for i in range(2, int(n**0.5) + 1):
-        if not is_prime[i]:
-            continue
-        for j in range(i * 2, n + 1, i):
-            is_prime[j] = 0
-    return is_prime
+show_flg = False
+# show_flg = True
 
 
 def main():
-    X = I()
-    a = primes(10**5+1000)
+    N, K, M = MI()
+    A = LI()
+    X = N * M - sum(A)
 
-    for i in range(0, 10**5+1000+1):
-        if i >= X and a[i] == 1:
-            print(i)
-            return
+    if X <= K:
+        print(max(X, 0))
+    else:
+        print(-1)
 
 
 if __name__ == '__main__':

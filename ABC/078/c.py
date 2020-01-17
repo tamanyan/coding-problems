@@ -52,31 +52,31 @@ show_flg = True
 
 
 def main():
-    S = input()
-    T = input()
-    canditates = []
+    N, M = MI()
+    ans = 0
+    cur = -1.0
+    cnt = 1
+    correct = 0.5 ** M
+    wrong = 1 - correct
 
-    for i in range(len(S)):
-        idx = 0
-        for j in range(i, len(S)):
-            if idx < len(T) and (S[j] == T[idx] or S[j] == '?'):
-                idx += 1
-            else:
-                break
+    while cnt <= 10**4:
+        cur = 0
+        if cnt == 1:
+            cur = (1900 * M + 100 * (N - M)) * correct
+            # print(cur, cnt, (cnt * 1900 * M + cnt * 100 * (N - M)))
+        # elif cnt == 2:
+        #     cur = (cnt * 1900 * M + cnt * 100 * (N - M)) * \
+        #         correct * (wrong ** (cnt - 1))
+        #     print(cur, cnt, (cnt * 1900 * M + cnt * 100 * (N - M)))
+        else:
+            cur = (cnt * 1900 * M + cnt * 100 * (N - M)) * \
+                correct * (wrong ** (cnt - 1))
+            # cur = (cnt * 1900 * M + cnt * 100 * (N - M)) * \
+            #     correct * (wrong ** (cnt - 1) ** M)
+        ans += cur
+        cnt += 1
 
-        # print(idx, S, len(T))
-        if idx == len(T):
-            canditates.append(S[:i] + T + S[i+len(T):])
-            # print(S[:i], T, S[i+len(T):])
-            # print(i, i+len(T))
-
-    if len(canditates) > 0:
-        # print(canditates)
-        canditates = [c.replace("?", "a") for c in canditates]
-        canditates.sort()
-        print(canditates[0])
-    else:
-        print("UNRESTORABLE")
+    print(int(ans + 0.0001))
 
 
 if __name__ == '__main__':

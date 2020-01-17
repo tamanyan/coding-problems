@@ -1,15 +1,26 @@
-import fractions
-
 # N個の最大公約数
 # ユークリッド互除法
 # Check
 
+
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+def lcm(a, b):
+    return a*b // gcd(a, b)
+
+
 def good(A, N):
     # A = sorted(A)
     ans = A[0]
+    # for i in range(1, N):
+    #     ans = fractions.gcd(A[i], ans)
     for i in range(1, N):
-        ans = fractions.gcd(A[i], ans)
-    print(ans)
+        ans = lcm(ans, A[i])
+    return ans
 
 
 def my(A, N):
