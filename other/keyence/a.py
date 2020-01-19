@@ -12,7 +12,13 @@ import time
 def I(): return int(input())
 
 
+def S(): return input()
+
+
 def MI(): return map(int, input().split())
+
+
+def MS(): return map(str, input().split())
 
 
 def LI(): return [int(i) for i in input().split()]
@@ -45,53 +51,19 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-
-show_flg = True
 show_flg = False
-
-
-def gcd(a, b):
-    if b == 0:
-        return a
-    return gcd(b, a % b)
-
-
-def lcm(a, b):
-    return a*b // gcd(a, b)
-
-
-def lcm_n(A, N):
-    # A = sorted(A)
-    ans = A[0]
-    # for i in range(1, N):
-    #     ans = fractions.gcd(A[i], ans)
-    for i in range(1, N):
-        ans = lcm(ans, A[i])
-    return ans
+# show_flg = True
 
 
 def main():
-    N, M = MI()
-    a = LI()
+    H = I()
+    W = I()
+    N = I()
 
-    if any([i % 2 for i in a]):
-        print(0)
-        return
-
-    n = lcm_n(a, N)
-    n = n // 2
-
-    if not all([(2 * n // x) % 2 for x in a]):
-        print(0)
-        return
-
-    if n > M:
-        print(0)
+    if H > W:
+        print(int(math.ceil(N / H)))
     else:
-        t = M // n
-        if t % 2 == 0:
-            t -= 1
-        print(t // 2 + 1)
+        print(int(math.ceil(N / W)))
 
 
 if __name__ == '__main__':

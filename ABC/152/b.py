@@ -1,4 +1,3 @@
-from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -14,6 +13,12 @@ def I(): return int(input())
 
 
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
+
+
+def MS(): return map(str, input().split())
 
 
 def LI(): return [int(i) for i in input().split()]
@@ -46,39 +51,19 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-
-# show_flg = False
-show_flg = True
-
-p = None
-XY = None
-N = None
+show_flg = False
+# show_flg = True
 
 
 def main():
-    N = I()
-    P = LI()
-    Q = LI()
-    # start = 0
-    # finish = 0
-    data = sorted(list(itertools.permutations(P, N)))
+    a, b = MS()
+    A = a * int(b)
+    B = b * int(a)
 
-    for index, arr in enumerate(data):
-        tmpS = 0
-        tmpE = 0
-        for i in range(N):
-            if P[i] == arr[i]:
-                tmpS += 1
-            if Q[i] == arr[i]:
-                tmpE += 1
-
-        if tmpS == N:
-            start = index
-
-        if tmpE == N:
-            finish = index
-
-    print(abs(finish - start))
+    if A <= B:
+        print(A)
+    else:
+        print(B)
 
 
 if __name__ == '__main__':

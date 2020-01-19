@@ -12,7 +12,13 @@ import time
 def I(): return int(input())
 
 
+def S(): return input()
+
+
 def MI(): return map(int, input().split())
+
+
+def MS(): return map(str, input().split())
 
 
 def LI(): return [int(i) for i in input().split()]
@@ -49,29 +55,12 @@ show_flg = False
 # show_flg = True
 
 
-def modinv(a):
-    return pow(a, MOD-2, MOD)
-
-
 def main():
-    N = I()
-    x = LI()
-    distance = [(x[i] - x[i-1]) % MOD for i in range(1, N)]
-
-    F = 1
-    for i in range(1, N):
-        F *= i
-        F %= MOD
-
-    c = [0] * (N - 1)
-    for i in range(N-1):
-        if i == 0:
-            c[i] = (F * 1) % MOD
-        else:
-            c[i] = (F * modinv(i+1)) % MOD + c[i-1]
-
-    moves = [(d * e) % MOD for d, e in zip(distance, c)]
-    print(sum(moves) % MOD)
+    N, M = MI()
+    if N == M:
+        print('Yes')
+    else:
+        print('No')
 
 
 if __name__ == '__main__':

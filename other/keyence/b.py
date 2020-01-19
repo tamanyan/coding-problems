@@ -1,3 +1,4 @@
+from bisect import bisect_left as lower_bound
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -49,29 +50,28 @@ show_flg = False
 # show_flg = True
 
 
-def modinv(a):
-    return pow(a, MOD-2, MOD)
-
-
 def main():
     N = I()
-    x = LI()
-    distance = [(x[i] - x[i-1]) % MOD for i in range(1, N)]
+    XL = [None] * N
+    ans = 0
 
-    F = 1
-    for i in range(1, N):
-        F *= i
-        F %= MOD
+    for i in range(N):
+        X, L_ = MI()
+        XL[i] = (X, L_, i)
 
-    c = [0] * (N - 1)
-    for i in range(N-1):
-        if i == 0:
-            c[i] = (F * 1) % MOD
-        else:
-            c[i] = (F * modinv(i+1)) % MOD + c[i-1]
+    arr = [None] * N
+    for i in range(N):
+        arr[i] = (XL[i][0] - XL[i][1], XL[i][0] + XL[i][1])
 
-    moves = [(d * e) % MOD for d, e in zip(distance, c)]
-    print(sum(moves) % MOD)
+    arr = sorted(arr, key=lambda a: a[1])
+    maxv = -(10 ** 9)
+    cur = maxv
+    for i in range(N):
+        if cur <= arr[i][0]:
+            cur = arr[i][1]
+            ans += 1
+
+    print(ans)
 
 
 if __name__ == '__main__':

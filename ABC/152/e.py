@@ -15,6 +15,12 @@ def I(): return int(input())
 def MI(): return map(int, input().split())
 
 
+def S(): return input()
+
+
+def MS(): return map(str, input().split())
+
+
 def LI(): return [int(i) for i in input().split()]
 
 
@@ -75,22 +81,27 @@ def factorization(n):
 
 
 def main():
-    N, M = MI()
+    N, K = MI()
     A = LI()
-    S = []
-    A = sorted(A, reverse=True)
-    print(A)
+    ans = 0
+    A = sorted(A)
     ARR = list(accumulate([0] + A))
 
-    # for i in range(len(A)):
-    #     S.append(A[i] * 2)
-    #     if i == len(A) - 1:
-    #         S.append(0)
-    #     else:
-    #         S.append(A[i] + A[i+1])
+    # for i, d in enumerate(list(itertools.combinations(A, K))):
+    #     print(i, d)
+    #     ans += max(d) - min(d)
 
-    # print(S)
-    print(A[0] * M * 2)
+    for i in range(N-K+1):
+        # print(i + 1, i + K - 1)
+        start = i + K - 1
+        a = ARR[N] - ARR[start]
+        n = A[i] * (N - (i + K - 1))
+        begin = A[start]
+        end = A[N-1]
+        print(A[i], 'b', begin, 'e', end, 'a', a, 'n', n)
+        ans += a - n
+
+    print(ans)
 
 
 if __name__ == '__main__':

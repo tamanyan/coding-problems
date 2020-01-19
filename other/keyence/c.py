@@ -1,3 +1,4 @@
+from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -35,6 +36,8 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
+def MS(): return map(str, input().split())
+
 YN = ['No', 'Yes']
 MOD = 10**9+7
 inf = float('inf')
@@ -45,33 +48,27 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-show_flg = False
-# show_flg = True
 
-
-def modinv(a):
-    return pow(a, MOD-2, MOD)
+# show_flg = False
+show_flg = True
 
 
 def main():
-    N = I()
-    x = LI()
-    distance = [(x[i] - x[i-1]) % MOD for i in range(1, N)]
+    N, K, S = MI()
+    cur = 0
+    ans = [0] * N
 
-    F = 1
-    for i in range(1, N):
-        F *= i
-        F %= MOD
-
-    c = [0] * (N - 1)
-    for i in range(N-1):
-        if i == 0:
-            c[i] = (F * 1) % MOD
+    for i in range(N):
+        if cur < K:
+            ans[i] = S
+            cur += 1
         else:
-            c[i] = (F * modinv(i+1)) % MOD + c[i-1]
+            if S == 10 ** 9:
+                ans[i] = 10 ** 9 - 1
+            else:
+                ans[i] = S + 1
 
-    moves = [(d * e) % MOD for d, e in zip(distance, c)]
-    print(sum(moves) % MOD)
+    print(*ans)
 
 
 if __name__ == '__main__':
