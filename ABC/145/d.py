@@ -14,6 +14,7 @@ g2 = [1, 1]  # 逆元テーブル
 inverse = [0, 1]  # 逆元テーブル計算用テーブル
 
 
+# MOD 組み合わせ
 def cmb(n, r, mod):
     if r < 0 or r > n:
         return 0
@@ -23,22 +24,22 @@ def cmb(n, r, mod):
 
 def main():
     X, Y = list(map(int, input().split()))
+    N = (2 * Y - X) / 3
+    M = (2 * X - Y) / 3
 
-    if (X + Y) % 3 != 0:
+    if not (N.is_integer() and M.is_integer()):
         print(0)
         return
 
-    n = int((2 * Y - X) / 3)
-    m = int(Y - 2 * n)
-    # print(n, m)
-    # print(cmb(n+m, min(n, m)))
+    N = int(N)
+    M = int(M)
 
-    for i in range(2, m + n + 1):
+    for i in range(2, M + N + 1):
         g1.append((g1[-1] * i) % MOD)
         inverse.append((-inverse[MOD % i] * (MOD//i)) % MOD)
         g2.append((g2[-1] * inverse[-1]) % MOD)
 
-    print(cmb(m+n, min(n, m), MOD))
+    print(cmb(N+M, M, MOD))
 
 
 if __name__ == '__main__':
