@@ -12,23 +12,15 @@ MOD = 10 ** 9 + 7
 
 def main():
     a, b, x = list(map(int, input().split()))
-
-    h = x / float(a ** 2)
+    area = x / a
+    h = area / a
     remain = b - h
-    ans = math.degrees(math.atan2(remain, a/2))
-    limit = math.degrees(math.atan2(h, a/2))
-    # limit = x / float(a ** 2)
-    # # limit_degree = math.degrees(math.atan2(limit, a))
-    # print(limit + h < b)
-    # print(limit)
 
-    if ans <= limit:
-        print(ans)
+    if h >= b / 2:
+        print(math.degrees(math.atan2(remain, a / 2)))
     else:
-        # x = b * a * t / 2
-        t = 2 * x / (b * a)
-        deg = math.degrees(math.atan2(b, t))
-        print(deg)
+        a_dash = (2 * area) / b
+        print(math.degrees(math.atan2(b, a_dash)))
 
 
 if __name__ == '__main__':

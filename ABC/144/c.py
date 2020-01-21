@@ -10,10 +10,9 @@ def main():
     N = int(input())
     ans = N
 
-    for i in range(1, int(N ** 0.5)+1):
+    for i in range(1, 10**6+1):
         if N % i == 0:
-            j = N // i
-            ans = min(i + j - 2, ans)
+            ans = min(ans, (i - 1) + (N // i - 1))
 
     print(ans)
 
