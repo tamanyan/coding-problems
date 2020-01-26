@@ -1,3 +1,4 @@
+from bisect import bisect_left as lower_bound
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -13,12 +14,6 @@ def I(): return int(input())
 
 
 def MI(): return map(int, input().split())
-
-
-def S(): return input()
-
-
-def MS(): return map(str, input().split())
 
 
 def LI(): return [int(i) for i in input().split()]
@@ -57,30 +52,24 @@ show_flg = False
 
 
 def main():
-    N = I()
-    a = LI()
-    b = [0] * N
+    N, W = MI()
+    v = [0] * N
+    w = [0] * N
+    dp = [0] * (W + 1)
 
-    for i in range(N-1, -1, -1):
-        total = 0
-
-        for cur in range(i, N, i+1):
-            # print(i + 1, '->', cur + 1)
-            total += b[cur]
-
-        if a[i] != total % 2:
-            b[i] = 1
-            # print(i+1, 'in', a[i],  total)
-        # print(*b)
-
-    ans = []
     for i in range(N):
-        if b[i] == 1:
-            ans.append(i+1)
+        v[i], w[i] = MI()
 
-    print(len(ans))
-    if len(ans) > 0:
-        print(*ans)
+    for i in range(N):
+        dp_next = [0] * (W + 1)
+        for j in range(W):
+            dp_next[j] = max(dp[j], dp_next[j])
+            if j+w[i] <= W:
+                dp_next[j+w[i]] = max(dp[j+w[i]], dp[j] + v[i])
+        dp = dp_next
+        # print(dp)
+
+    print(dp[W])
 
 
 if __name__ == '__main__':

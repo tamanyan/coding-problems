@@ -22,6 +22,5 @@ def main():
         a_dash = (2 * area) / b
         print(math.degrees(math.atan2(b, a_dash)))
 
-
 if __name__ == '__main__':
     main()

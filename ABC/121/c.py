@@ -1,3 +1,4 @@
+from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -41,6 +42,9 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
+def MS(): return map(str, input().split())
+
+
 YN = ['No', 'Yes']
 MOD = 10**9+7
 inf = float('inf')
@@ -52,35 +56,43 @@ sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
+# show_flg = False
 show_flg = True
-show_flg = False
+
+p = None
+XY = None
+N = None
 
 
 def main():
-    N = I()
-    a = LI()
-    b = [0] * N
+    N, M = MI()
+    AB = [None] * N
 
-    for i in range(N-1, -1, -1):
-        total = 0
-
-        for cur in range(i, N, i+1):
-            # print(i + 1, '->', cur + 1)
-            total += b[cur]
-
-        if a[i] != total % 2:
-            b[i] = 1
-            # print(i+1, 'in', a[i],  total)
-        # print(*b)
-
-    ans = []
     for i in range(N):
-        if b[i] == 1:
-            ans.append(i+1)
+        A, B = MI()
+        AB[i] = (A, B)
 
-    print(len(ans))
-    if len(ans) > 0:
-        print(*ans)
+    AB = sorted(AB)
+
+    ans = 0
+    total = 0
+
+    for i in range(N):
+        price = AB[i][0]
+        size = AB[i][1]
+
+        if M < total + size:
+            n = M - total
+            ans += price * n
+            total += n
+        else:
+            ans += price * size
+            total += size
+
+        if total >= M:
+            break
+
+    print(ans)
 
 
 if __name__ == '__main__':

@@ -41,7 +41,7 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = ['No', 'Yes']
+YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
 IINF = 10**10
@@ -57,30 +57,30 @@ show_flg = False
 
 
 def main():
-    N = I()
-    a = LI()
-    b = [0] * N
+    H, N = MI()
+    A = [0] * N
+    B = [0] * N
+    dp = [IINF] * (H+1)
+    dp[0] = 0
 
-    for i in range(N-1, -1, -1):
-        total = 0
-
-        for cur in range(i, N, i+1):
-            # print(i + 1, '->', cur + 1)
-            total += b[cur]
-
-        if a[i] != total % 2:
-            b[i] = 1
-            # print(i+1, 'in', a[i],  total)
-        # print(*b)
-
-    ans = []
     for i in range(N):
-        if b[i] == 1:
-            ans.append(i+1)
+        A[i], B[i] = MI()
 
-    print(len(ans))
-    if len(ans) > 0:
-        print(*ans)
+    for i in range(N):
+        dp_next = [IINF] * (H + 1)
+        for j in range(H+1):
+            # まずは値を下に下ろしてくる
+            dp_next[j] = min(dp[j], dp_next[j])
+            if j + A[i] <= H:
+                # すでに計算されている値か、遷移先のどっちが小さいのか？
+                dp_next[j+A[i]] = min(dp_next[j+A[i]], dp_next[j] + B[i])
+            else:
+                # すでに計算されている値か、遷移先のどっちが小さいのか？
+                dp_next[H] = min(dp_next[H], dp_next[j] + B[i])
+        dp = dp_next
+        # print(dp)
+
+    print(dp[H])
 
 
 if __name__ == '__main__':

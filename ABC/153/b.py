@@ -41,7 +41,7 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = ['No', 'Yes']
+YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
 IINF = 10**10
@@ -51,36 +51,18 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-
-show_flg = True
 show_flg = False
+# show_flg = True
 
 
 def main():
-    N = I()
-    a = LI()
-    b = [0] * N
+    H, N = MI()
+    A = LI()
 
-    for i in range(N-1, -1, -1):
-        total = 0
-
-        for cur in range(i, N, i+1):
-            # print(i + 1, '->', cur + 1)
-            total += b[cur]
-
-        if a[i] != total % 2:
-            b[i] = 1
-            # print(i+1, 'in', a[i],  total)
-        # print(*b)
-
-    ans = []
     for i in range(N):
-        if b[i] == 1:
-            ans.append(i+1)
+        H -= A[i]
 
-    print(len(ans))
-    if len(ans) > 0:
-        print(*ans)
+    print(YN[H <= 0])
 
 
 if __name__ == '__main__':
