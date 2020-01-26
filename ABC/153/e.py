@@ -69,7 +69,8 @@ def main():
     for i in range(N):
         dp_next = [IINF] * (H + 1)
         for j in range(H+1):
-            # まずは値を下に下ろしてくる
+            # 1. 計算されてない場合、まずは値を下に下ろしてくる
+            # 2. 既に計算されている場合、小さい方を取る
             dp_next[j] = min(dp[j], dp_next[j])
             if j + A[i] <= H:
                 # すでに計算されている値か、遷移先のどっちが小さいのか？
