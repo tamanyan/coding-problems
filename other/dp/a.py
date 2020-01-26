@@ -1,4 +1,3 @@
-from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -42,9 +41,6 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-def MS(): return map(str, input().split())
-
-
 YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
@@ -56,24 +52,22 @@ sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
-# show_flg = False
 show_flg = True
+show_flg = False
 
 
 def main():
-    N, K = MI()
-    H = LI()
-    H = sorted(H, reverse=True)
-    ans = 0
+    N = I()
+    h = LI()
+    dp = [IINF] * N
+    dp[0] = 0
 
-    if len(H) <= K:
-        print(0)
-        return
+    for i in range(N-1):
+        dp[i+1] = min(dp[i] + abs(h[i+1] - h[i]), dp[i+1])
+        if i + 2 < N:
+            dp[i+2] = min(dp[i] + abs(h[i+2] - h[i]), dp[i+2])
 
-    for h in H[K:]:
-        ans += h
-
-    print(ans)
+    print(dp[N-1])
 
 
 if __name__ == '__main__':
