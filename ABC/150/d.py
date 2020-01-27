@@ -59,7 +59,7 @@ def gcd(a, b):
 def lcm(a, b):
     return a*b // gcd(a, b)
 
-
+# N個最小公倍数
 def lcm_n(A, N):
     # A = sorted(A)
     ans = A[0]
