@@ -1,48 +1,75 @@
-import math
-import os
+from heapq import heappush, heappop, heapify
+from collections import deque, defaultdict, Counter
+import itertools
+from itertools import permutations, combinations, accumulate
 import sys
-# from fractions import gcd
-input = sys.stdin.readline
-
-sys.setrecursionlimit(2147483647)
-INF = float("inf")
-IINF = 10 ** 18
-MOD = 10 ** 9 + 7
+import bisect
+import string
+import math
+import time
 
 
+def I(): return int(input())
+
+
+def MI(): return map(int, input().split())
+
+
+def S(): return input()
+
+
+def MS(): return map(str, input().split())
+
+
+def LI(): return [int(i) for i in input().split()]
+
+
+def LI_(): return [int(i)-1 for i in input().split()]
+
+
+def StoI(): return [ord(i)-97 for i in input()]
+
+
+def ItoS(nn): return chr(nn+97)
+
+
+def input(): return sys.stdin.readline().rstrip()
+
+
+def show(*inp, end='\n'):
+    if show_flg:
+        print(*inp, end=end)
+
+
+YN = {False: 'No', True: 'Yes'}
+MOD = 10**9+7
+inf = float('inf')
+IINF = 10**10
+l_alp = string.ascii_lowercase
+u_alp = string.ascii_uppercase
+ts = time.time()
+sys.setrecursionlimit(10**6)
+nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+
+
+show_flg = True
+show_flg = False
+
+# 二分探索
 def main():
-    A, B, X = map(int, input().split())
-    l = 0
-    r = 10**9 + 1
+    A, B, X = MI()
+    low = 0
+    high = 10**19
 
-    def f(N):
-        return A * N + B * len(str(N))
-
-    # 二分探索
-    while r-l > 1:
-        c = (l+r) // 2
-        if f(c) <= X:
-            l = c
+    while high - low > 1:
+        mid = (low + high) // 2
+        N = A * mid + B * len(str(mid))
+        if N <= X:
+            low = mid
         else:
-            r = c
-        print(l, r, c)
+            high = mid
 
-    print(l)
-
-    # N = (X - B * d) / A
-    # MAX = 18
-    # digit = 0
-
-    # for d in range(MAX+1):
-    #     p = A * 10 ** d + B * d
-    #     # print(d, p - X)
-    #     if p - X > 0:
-    #         digit = d
-    #         break
-
-    # # print(digit)
-    # ans = (X - B * digit) // A
-    # print(min(ans, 10**9))
+    print(min(low, 10**9))
 
 
 if __name__ == '__main__':
