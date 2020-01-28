@@ -56,6 +56,7 @@ show_flg = True
 show_flg = False
 
 
+# ナップサック問題 大きい
 def main():
     N, W = MI()
     V = 10 ** 3 * N
