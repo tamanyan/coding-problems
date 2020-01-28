@@ -56,52 +56,51 @@ show_flg = True
 show_flg = False
 
 
-def factorization(n):
-    """
-    素因数分解
-    :param int n:
-    :rtype: list of int
-    """
-    if n <= 1:
-        return []
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
 
-    ret = []
-    while n > 2 and n % 2 == 0:
-        ret.append(2)
-        n //= 2
-    i = 3
-    while i <= math.sqrt(n):
-        if n % i == 0:
-            ret.append(i)
-            n //= i
-        else:
-            i += 2
-    ret.append(n)
-    return ret
+
+# N個の最大公約数
+def eucledean(A, N):
+    # A = sorted(A)
+    ans = A[0]
+    for i in range(1, N):
+        ans = gcd(A[i], ans)
+    return ans
+
+
+def lcm(a, b):
+    return a*b // gcd(a, b)
+
+
+# N個最小公倍数
+def lcm_n(A, N):
+    # A = sorted(A)
+    ans = A[0]
+    # for i in range(1, N):
+    #     ans = fractions.gcd(A[i], ans)
+    for i in range(1, N):
+        ans = lcm(ans, A[i])
+    return ans
+
+
+def modinv(a):
+    return pow(a, MOD-2, MOD)
 
 
 def main():
-    N, K = MI()
+    N = I()
     A = LI()
     ans = 0
-    A = sorted(A)
-    ARR = list(accumulate([0] + A))
 
-    # for i, d in enumerate(list(itertools.combinations(A, K))):
-    #     print(i, d)
-    #     ans += max(d) - min(d)
-
-    for i in range(N-K+1):
-        # print(i + 1, i + K - 1)
-        start = i + K - 1
-        a = ARR[N] - ARR[start]
-        n = A[i] * (N - (i + K - 1))
-        begin = A[start]
-        end = A[N-1]
-        print(A[i], 'b', begin, 'e', end, 'a', a, 'n', n)
-        ans += a - n
-
-    print(ans)
+    a = lcm_n(A, N)
+    a %= MOD
+    for i in range(N):
+        ans += a * modinv(A[i])
+        ans %= MOD
+    print(ans % MOD)
 
 
 if __name__ == '__main__':
