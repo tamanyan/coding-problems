@@ -42,6 +42,9 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
+def MS(): return map(str, input().split())
+
+
 YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
@@ -55,20 +58,19 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = True
 
 
+def C(n, k):
+    return math.factorial(n) // (math.factorial(k) * math.factorial(n - k))
+
+
+# dp[i+1][j] += dp[i] + n - j
+
 def main():
-    s = S()
-    N = len(s)
-    dp = [[0] * 2 for i in range(N)]
-    dp[0][0] = int(s[0])
-    dp[0][1] = 1
+    n, m = MI()
+    dp = [[0] * (n + 1) for i in range(2*m+1)]
 
-    for i in range(1, N):
-        x = int(s[i])
-        dp[i][0] = dp[i-1][0] * 10 + dp[i-1][1] * x
-        dp[i][1] = dp[i-1][0] * 0 + dp[i-1][1] * 1
-        print(dp[i-1], dp[i])
-
-    print(dp[N-1][0] + dp[N-1][1])
+    for i in range(2*m):
+        for j in range(1, n+1):
+            dp[i+1][j] += dp[i][j] + n - j
     # print(C(2 * m + n - 1, 2*m) % MOD)
 
 

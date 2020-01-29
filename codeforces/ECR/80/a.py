@@ -1,4 +1,3 @@
-from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -13,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def MI(): return map(int, input().split())
-
-
 def S(): return input()
+
+
+def MI(): return map(int, input().split())
 
 
 def MS(): return map(str, input().split())
@@ -50,26 +49,30 @@ l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-
-# show_flg = False
-show_flg = True
+show_flg = False
+# show_flg = True
 
 
 def main():
-    s = S()
-    N = len(s)
-    dp = [[0] * 2 for i in range(N)]
-    dp[0][0] = int(s[0])
-    dp[0][1] = 1
+    T = I()
+    n = [0] * T
+    d = [0] * T
 
-    for i in range(1, N):
-        x = int(s[i])
-        dp[i][0] = dp[i-1][0] * 10 + dp[i-1][1] * x
-        dp[i][1] = dp[i-1][0] * 0 + dp[i-1][1] * 1
-        print(dp[i-1], dp[i])
+    for i in range(T):
+        n[i], d[i] = MI()
 
-    print(dp[N-1][0] + dp[N-1][1])
-    # print(C(2 * m + n - 1, 2*m) % MOD)
+    for i in range(T):
+        N = n[i]
+        D = d[i]
+
+        minv = 10**19
+        for mid in range(int(D**0.5) + 1):
+            days = mid + (D + (mid + 1) - 1) // (mid + 1)
+            minv = min(minv, days)
+        if minv <= N:
+            print('YES')
+        else:
+            print('NO')
 
 
 if __name__ == '__main__':
