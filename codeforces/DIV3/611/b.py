@@ -12,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def S(): return input()
-
-
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
 
 
 def MS(): return map(str, input().split())
@@ -53,16 +53,31 @@ show_flg = False
 # show_flg = True
 
 
+def solve(T):
+    n, k = MI()
+
+    if n >= k:
+        c = n // k
+        remain = n % k
+        if k // 2 >= remain:
+            # print(k * c, remain, n)
+            print(k * c + remain)
+        else:
+            # print(k * c, remain, n)
+            print(k * c + k // 2)
+    else:
+        remain = n % k
+        if k // 2 >= remain:
+            print(remain)
+        else:
+            print(k // 2)
+
+
 def main():
-    num = 998244353
     T = I()
-    n = [0] * T
 
     for i in range(T):
-        n[i] = I()
-
-    for i in range(T):
-        pass
+        solve(T)
 
 
 if __name__ == '__main__':

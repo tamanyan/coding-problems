@@ -12,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def S(): return input()
-
-
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
 
 
 def MS(): return map(str, input().split())
@@ -53,16 +53,18 @@ show_flg = False
 # show_flg = True
 
 
+def solve(T):
+    hh, mm = MI()
+    hours = 23 - hh
+    mins = 60 - mm
+    print(hours * 60 + mins)
+
+
 def main():
-    num = 998244353
     T = I()
-    n = [0] * T
 
     for i in range(T):
-        n[i] = I()
-
-    for i in range(T):
-        pass
+        solve(T)
 
 
 if __name__ == '__main__':

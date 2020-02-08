@@ -12,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def S(): return input()
-
-
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
 
 
 def MS(): return map(str, input().split())
@@ -53,16 +53,32 @@ show_flg = False
 # show_flg = True
 
 
+def solve(T):
+    n = I()
+    a = LI()
+    prefix = -1
+    suffix = 10**9
+
+    # print(a)
+    for k in range(n):
+        # print(k, a[k] >= k,  a[k] >= j)
+        if a[k] < k:
+            break
+        prefix = k
+
+    for k in range(n-1, -1, -1):
+        if a[k] < (n - k - 1):
+            break
+        suffix = k
+
+    print(YN[prefix >= suffix])
+
+
 def main():
-    num = 998244353
     T = I()
-    n = [0] * T
 
     for i in range(T):
-        n[i] = I()
-
-    for i in range(T):
-        pass
+        solve(T)
 
 
 if __name__ == '__main__':

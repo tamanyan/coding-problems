@@ -12,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def S(): return input()
-
-
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
 
 
 def MS(): return map(str, input().split())
@@ -52,17 +52,49 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = False
 # show_flg = True
 
+import random
+
+def solve(T):
+    N = I()
+    s = S()
+    # s = [random.choice(['R', 'L', 'U', 'D']) for i in range(2 * 10**5)]
+    # N = len(s)
+
+    test3 = {'[0, 0]': [0]}
+    pos = [0, 0]
+    can = []
+    for i in range(N):
+        if s[i] == 'U':
+            pos[1] += 1
+        elif s[i] == 'D':
+            pos[1] -= 1
+        elif s[i] == 'R':
+            pos[0] += 1
+        elif s[i] == 'L':
+            pos[0] -= 1
+
+        str_pos = str(pos)
+        if str_pos not in test3:
+            test3[str_pos] = [i+1]
+        else:
+            can.append((i - test3[str_pos][-1], test3[str_pos][-1]))
+            test3[str_pos] = []
+            test3[str_pos].append(i+1)
+
+    can = sorted(can)
+
+    # print(loc1, loc2)
+    if len(can) > 0:
+        print(can[0][1] + 1, can[0][1] + 1 + can[0][0])
+    else:
+        print(-1)
+
 
 def main():
-    num = 998244353
     T = I()
-    n = [0] * T
 
     for i in range(T):
-        n[i] = I()
-
-    for i in range(T):
-        pass
+        solve(T)
 
 
 if __name__ == '__main__':

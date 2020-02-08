@@ -12,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def S(): return input()
-
-
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
 
 
 def MS(): return map(str, input().split())
@@ -54,15 +54,20 @@ show_flg = False
 
 
 def main():
-    num = 998244353
     T = I()
-    n = [0] * T
+    s = [0] * T
 
     for i in range(T):
-        n[i] = I()
+        s[i] = I()
 
     for i in range(T):
-        pass
+        n = s[i]
+        a = n // 9
+        b = n % 9
+        if n % 9 == 0:
+            print(10 * a + b - 1)
+        else:
+            print(10 * a + b)
 
 
 if __name__ == '__main__':

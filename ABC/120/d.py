@@ -135,14 +135,15 @@ def main():
     for i in range(M-1, 0, -1):
         u = U[i]
         v = V[i]
-
-        show(i, 'same', u, v, uf.parents)
-        if uf.same(u, v):
-            ans[i-1] = ans[i]
-        else:
-            ans[i-1] = ans[i] - uf.size(u) * uf.size(v)
-            show(i, 'union', u, v, uf.parents)
+        if not uf.same(u, v):
+            vsize = uf.size(v)
+            usize = uf.size(u)
             uf.union(u, v)
+            ans[i-1] = ans[i] - (vsize * usize)
+        else:
+            ans[i-1] = ans[i]
+
+        # print(uf.members(u))
 
     print(*ans)
 

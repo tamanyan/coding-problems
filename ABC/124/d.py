@@ -1,93 +1,102 @@
+from heapq import heappush, heappop, heapify
+from collections import deque, defaultdict, Counter
+import itertools
+from itertools import permutations, combinations, accumulate
+import sys
+import bisect
+import string
 import math
-from itertools import accumulate
+import time
 
-INF = float("inf")
+
+def I(): return int(input())
+
+
+def MI(): return map(int, input().split())
+
+
+def S(): return input()
+
+
+def MS(): return map(str, input().split())
+
+
+def LI(): return [int(i) for i in input().split()]
+
+
+def LI_(): return [int(i)-1 for i in input().split()]
+
+
+def StoI(): return [ord(i)-97 for i in input()]
+
+
+def ItoS(nn): return chr(nn+97)
+
+
+def input(): return sys.stdin.readline().rstrip()
+
+
+def show(*inp, end='\n'):
+    if show_flg:
+        print(*inp, end=end)
+
+
+YN = {False: 'No', True: 'Yes'}
+MOD = 10**9+7
+inf = float('inf')
+IINF = 10**10
+l_alp = string.ascii_lowercase
+u_alp = string.ascii_uppercase
+ts = time.time()
+sys.setrecursionlimit(10**6)
+nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+
+
+# show_flg = True
+show_flg = False
 
 
 def main():
-    N, K = map(int, input().split())
-    S = input()
-    zero_list = []
-    A = []
-    one = 0
-    zero = 0
+    N, K = MI()
+    s = S()
+    a = [0]
+    first_zero = s[0] == '0'
+    cur = s[0]
 
-    for i in range(N):
-        if S[i] == '1':
-            one += 1
-            if zero != 0:
-                A.append(zero)
-                zero_list.append(zero)
-                zero = 0
+    for i in range(len(s)):
+        if cur == s[i]:
+            a[-1] += 1
         else:
-            zero += 1
-            if one != 0:
-                A.append(one)
-                one = 0
+            cur = s[i]
+            a.append(1)
 
-    if one != 0:
-        A.append(one)
-    elif zero != 0:
-        A.append(zero)
-        zero_list.append(zero)
-
-    if len(zero_list) <= K:
-        print(N)
-        return
-
-    section = 0
-    if S[0] == '1':
-        section = 3 + (K-1) * 2
-    else:
-        section = 2 + (K-1) * 2
-
-    B = list(accumulate([0] + A))
-    # print(B)
-    if S[0] == '1':
-        # print(*A, section)
-        m = 0
-        i = 0
-        while True:
-            if i % 2 == 0:
-                section = 3 + (K-1) * 2
-                end = min(i+section, len(B) - 1)
-                # print(B[end] - B[i])
-                # print(end)
-                m = max(m, B[end] - B[i])
-                if len(B) - 1 <= end:
-                    break
+    # print(a)
+    # print(first_zero, limit)
+    ans = 0
+    cur = 0
+    right = 0
+    for left in range(len(a)):
+        if first_zero:
+            if left % 2 == 0:
+                limit = 2 * K
             else:
-                section = 2 + (K-1) * 2
-                end = min(i+section, len(B) - 1)
-                # print(B[end] - B[i])
-                # print(end)
-                m = max(m, B[end] - B[i])
-                if len(B) - 1 <= end:
-                    break
-            i += 1
-        print(m)
-    else:
-        m = 0
-        i = 0
-        while True:
-            if i % 2 == 0:
-                section = 2 + (K-1) * 2
-                end = min(i+section, len(B) - 1)
-                # print(B[end] - B[i])
-                # print(end, len(B) <= end - 1)
-                m = max(m, B[end] - B[i])
-                if len(B) - 1 <= end:
-                    break
+                limit = 2 * K + 1
+        else:
+            if left % 2 == 0:
+                limit = 2 * K + 1
             else:
-                section = 3 + (K-1) * 2
-                end = min(i+section, len(B) - 1)
-                # print(B[end] - B[i])
-                # print(end, len(B) <= end - 1)
-                m = max(m, B[end] - B[i])
-                if len(B) - 1 <= end:
-                    break
-            i += 1
-        print(m)
+                limit = 2 * K
+        # limit = 2 * K if first_zero else 2 * K + 1
+
+        while right < len(a) and right - left < limit:
+            cur += a[right]
+            right += 1
+
+        ans = max(cur, ans)
+        cur -= a[left]
+        # print(ans, cur, cur + a[left], left, right)
+
+    print(ans)
 
 
 if __name__ == '__main__':

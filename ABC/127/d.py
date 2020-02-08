@@ -1,104 +1,89 @@
+from heapq import heappush, heappop, heapify
+from collections import deque, defaultdict, Counter
+import itertools
+from itertools import permutations, combinations, accumulate
 import sys
-import math
-import heapq
 import bisect
-input = sys.stdin.readline
+import string
+import math
+import time
 
-MOD = 10 ** 9 + 7
+def I(): return int(input())
 
 
-def my_sol(N, M):
-    _A = {}
-    A = []
+def MI(): return map(int, input().split())
 
-    for i in map(int, input().split()):
-        if i in _A:
-            _A[i] += 1
-        else:
-            _A[i] = 1
 
-    for (num, c) in _A.items():
-        heapq.heappush(A, (num, c))
-    # B = [0] * N
-    # C = [0] * N
-    # print(A)
+def S(): return input()
 
-    B = [0] * M
-    C = [0] * M
-    T = [None] * M
-    for i in range(M):
-        b, c = map(int, input().split())
-        T[i] = (c, b)
 
-    T = sorted(T, reverse=True)
+def MS(): return map(str, input().split())
 
-    finish = False
-    for i in range(M):
-        C, B = T[i]
 
-        while B > 0:
-            item = heapq.heappop(A)
+def LI(): return [int(i) for i in input().split()]
 
-            if item[0] < C:
-                replace = min(item[1], B)
-                B -= replace
-                remain = item[1] - replace
 
-                heapq.heappush(A, (C, replace))
+def LI_(): return [int(i)-1 for i in input().split()]
 
-                if remain > 0:
-                    heapq.heappush(A, (item[0], remain))
 
-                # print("")
-                # print(A, B, replace)
-            else:
-                heapq.heappush(A, item)
-                finish = True
-                break
+def StoI(): return [ord(i)-97 for i in input()]
 
-        if finish is True:
-            break
 
-    ans = 0
-    for a in A:
-        ans += a[0] * a[1]
-    print(ans)
+def ItoS(nn): return chr(nn+97)
+
+
+def input(): return sys.stdin.readline().rstrip()
+
+
+def show(*inp, end='\n'):
+    if show_flg:
+        print(*inp, end=end)
+
+
+YN = ['No', 'Yes']
+MOD = 10**9+7
+inf = float('inf')
+IINF = 10**10
+l_alp = string.ascii_lowercase
+u_alp = string.ascii_uppercase
+ts = time.time()
+sys.setrecursionlimit(10**6)
+nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+
+
+show_flg = True
+show_flg = False
 
 
 def main():
-    N, M = map(int, input().split())
+    N, M = MI()
+    A = LI()
     D = {}
-    E = []
-
-    for i in map(int, input().split()):
-        if i in D:
-            D[i] += 1
-        else:
-            D[i] = 1
 
     for i in range(M):
-        B, C = map(int, input().split())
-        if C in D:
-            D[C] += B
-        else:
-            D[C] = B
+        B, C = MI()
+        if C not in D:
+            D[C] = 0
+        D[C] += B
 
-    # print(D)
-    for (num, c) in D.items():
-        heapq.heappush(E, (-num, c))
+    for i in range(N):
+        if A[i] not in D:
+            D[A[i]] = 0
+        D[A[i]] += 1
 
+    sorted_items = sorted(D.items(), reverse=True)
     total = 0
     ans = 0
-
-    while total < N:
-        item = heapq.heappop(E)
-        num = -item[0]
-        c = item[1]
-        ans += num * min(N-total, c)
-        total += min(N-total, c)
+    for integer, num in sorted_items:
+        if total + num > N:
+            ans += integer * (N - total)
+            total = N
+            break
+        else:
+            total += num
+            ans += integer * num
 
     print(ans)
-    # my_sol(N, M)
 
 
 if __name__ == '__main__':

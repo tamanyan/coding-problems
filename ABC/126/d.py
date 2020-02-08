@@ -5,8 +5,8 @@ from collections import deque
 def main():
     # BLACK = 1
     WHITE = 0
-    EDGE = 0
-    WEIGHT = 1
+    # EDGE = 0
+    # WEIGHT = 1
     N = int(input())
     graph = [[] for i in range(N+1)]
     colors = [-1] * (N + 1)
@@ -20,22 +20,25 @@ def main():
     q.append(1)
     colors[1] = WHITE
     visited = [False] * (N + 1)
-    while len(q) != 0:
-        parentIdx = q.popleft()
-        parent = graph[parentIdx]
-        # print(u+1, [i + 1 for i in q])
-        for v, e in enumerate(parent):
-            if not visited[e[EDGE]]:
-                q.append(e[EDGE])
-                visited[e[EDGE]] = True
-                if e[WEIGHT] % 2 == 0:
-                    colors[e[EDGE]] = colors[parentIdx]
-                else:
-                    colors[e[EDGE]] = 1 - colors[parentIdx]
-                # print(colors)
+    visited[1] = True
 
-    for i in range(1, len(colors)):
-        print(colors[i])
+    while len(q) != 0:
+        n = q.popleft()
+
+        for v, w in graph[n]:
+            if visited[v]:
+                continue
+
+            if w % 2 == 0:
+                colors[v] = colors[n]
+            else:
+                colors[v] = 1 - colors[n]
+
+            visited[v] = True
+            q.append(v)
+
+    for i in colors[1:]:
+        print(i)
 
 
 if __name__ == '__main__':
