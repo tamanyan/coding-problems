@@ -57,24 +57,31 @@ def solve(T):
     n, g, b = MI()
     atleast = (n + 1) // 2
 
-    low = 0
-    high = 10**19
-    ans = 0
+    if g >= atleast:
+        print(n)
+        return
 
-    while high - low > 1:
-        mid = (low + high) // 2
-        terms = mid // (g + b)
-        remain = mid % (g + b)
-        count = g * terms + min(remain, g)
-        print(mid, terms, remain, count, atleast)
-        if count <= atleast:
-            low = mid + 1
+    c = n // (g + b)
+    r = n % (g + b)
+    m = c * g + min(r, g)
+
+    # print(m, c, r)
+
+    if m >= atleast:
+        print(n)
+    else:
+        terms = atleast // g
+        r = atleast % g
+        padding = n - atleast
+
+        if r != 0:
+            skipping = terms * b - padding
+            ans = terms * g + r + padding + skipping
+            print(ans)
         else:
-            high = mid - 1
-            ans = mid
-
-    print(low, high, ans)
-    print(max(n, ans))
+            skipping = terms * b - padding - b
+            ans = terms * g + padding + skipping
+            print(ans)
 
 
 def main():
