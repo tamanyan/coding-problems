@@ -58,20 +58,17 @@ def main():
 
     for i in range(M):
         a, b = MI()
-        ab[i] = (a, b)
+        ab[i] = [a, b]
 
-    ab = sorted(ab, key=lambda x: x[1])
-    print(ab)
-    bridge = [(ab[0][1]-1, ab[0][1])]
+    ab = sorted(ab, key=lambda v: v[1])
+    bridges = [ab[0]]
+    # print(ab)
 
-    for i in range(1, len(ab)):
-        # print(ab[i], bridge[-1])
-        if ab[i][0] <= bridge[-1][0] and ab[i][1] >= bridge[-1][1]:
-            pass
-        else:
-            bridge.append((ab[i][1]-1, ab[i][1]))
+    for i in range(1, M):
+        if bridges[-1][1] <= ab[i][0]:
+            bridges.append(ab[i])
 
-    print(len(bridge))
+    print(len(bridges))
 
 
 if __name__ == '__main__':

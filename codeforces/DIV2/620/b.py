@@ -54,31 +54,46 @@ show_flg = False
 
 
 def main():
-    t = I()
-    for i in range(t):
-        n, m = MI()
-        # m: number of one
-        # n: number of string
-        # z: number of zero
-        z = n - m
-        g = m + 1
-        total = (n * (n + 1)) // 2
-        if z >= g:
-            k = (z + (g - 1)) // g
-            r = z % g
-            zero_total = 0
-            if r != 0:
-                zero_total = ((k * (k + 1)) // 2) * r
-                zero_total += ((k * (k - 1)) // 2) * (g - r)
-            else:
-                zero_total = ((k * (k + 1)) // 2) * g
-            # print(total, zero_total, r)
-            print(total - zero_total)
+    n, m = MI()
+    s = [None] * n
+    pairs = []
+    self_p = []
+    n_pairs = []
+
+    for i in range(n):
+        s[i] = S()
+
+    for i in range(n):
+        for j in range(i, n):
+            cnt = 0
+            for k in range(m):
+                if s[i][k] == s[j][(m-1)-k]:
+                    cnt += 1
+
+            if cnt == m:
+                pairs.append((i, j))
+
+    for i in range(len(pairs)):
+        if pairs[i][0] == pairs[i][1]:
+            self_p.append(pairs[i])
         else:
-            k = 1
-            g = z
-            zero_total = ((k * (k + 1)) // 2) * g
-            print(total - zero_total)
+            n_pairs.append(pairs[i])
+
+    # print(n_pairs, self_p)
+    head = ''
+    tail = ''
+    for i in range(len(n_pairs)):
+        head += s[n_pairs[i][0]]
+        tail = s[n_pairs[i][1]] + tail
+
+    middle = ''
+    for i in range(len(self_p)):
+        middle = s[self_p[i][0]]
+
+    ans = head + middle + tail
+    print(len(ans))
+    print(ans)
+    # print(head, middle, tail)
 
 
 if __name__ == '__main__':

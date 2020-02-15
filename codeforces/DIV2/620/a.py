@@ -53,32 +53,21 @@ show_flg = False
 # show_flg = True
 
 
+def solve(T):
+    x, y, a, b = MI()
+    d = y - x
+
+    if d % (a + b) == 0:
+        print(d // (a + b))
+    else:
+        print(-1)
+
+
 def main():
-    t = I()
-    for i in range(t):
-        n, m = MI()
-        # m: number of one
-        # n: number of string
-        # z: number of zero
-        z = n - m
-        g = m + 1
-        total = (n * (n + 1)) // 2
-        if z >= g:
-            k = (z + (g - 1)) // g
-            r = z % g
-            zero_total = 0
-            if r != 0:
-                zero_total = ((k * (k + 1)) // 2) * r
-                zero_total += ((k * (k - 1)) // 2) * (g - r)
-            else:
-                zero_total = ((k * (k + 1)) // 2) * g
-            # print(total, zero_total, r)
-            print(total - zero_total)
-        else:
-            k = 1
-            g = z
-            zero_total = ((k * (k + 1)) // 2) * g
-            print(total - zero_total)
+    T = I()
+
+    for i in range(T):
+        solve(T)
 
 
 if __name__ == '__main__':
