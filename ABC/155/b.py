@@ -1,21 +1,24 @@
-
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
-from itertools import permutations, combinations
+from itertools import permutations, combinations, accumulate
 import sys
 import bisect
 import string
 import math
 import time
-from fractions import gcd
-#import random
 
 
 def I(): return int(input())
 
 
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
+
+
+def MS(): return map(str, input().split())
 
 
 def LI(): return [int(i) for i in input().split()]
@@ -38,38 +41,35 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = ['Yes', 'No']
+YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**19
+IINF = 10**10
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
 sys.setrecursionlimit(10**6)
+nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+
+show_flg = False
+# show_flg = True
 
 
-# show_flg = False
-show_flg = True
-
-
-# 終端ソート
 def main():
-    N, M = MI()
-    ab = [None] * M
+    N = I()
+    a = LI()
+    cnt = 0
 
-    for i in range(M):
-        a, b = MI()
-        ab[i] = [a, b]
+    for i in range(N):
+        if a[i] % 2 == 0 and (a[i] % 3 == 0 or a[i] % 5 == 0):
+            cnt += 1
+        elif a[i] % 2 == 1:
+            cnt += 1
 
-    ab = sorted(ab, key=lambda v: v[1])
-    bridges = [ab[0]]
-    # print(ab)
-
-    for i in range(1, M):
-        if bridges[-1][1] <= ab[i][0]:
-            bridges.append(ab[i])
-
-    print(len(bridges))
+    if cnt == N:
+        print('APPROVED')
+    else:
+        print('DENIED')
 
 
 if __name__ == '__main__':
