@@ -55,21 +55,27 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = True
 show_flg = False
 
-# 二分探索
+
+def f(x, A, B):
+    return A * x + B * len(str(x))
+
+
+# 二分探索 ok ng
 def main():
     A, B, X = MI()
-    low = 0
-    high = 10**19
+    s = 1
+    t = 10**9 + 1
+    ok = s - 1
+    ng = t
 
-    while high - low > 1:
-        mid = (low + high) // 2
-        N = A * mid + B * len(str(mid))
-        if N <= X:
-            low = mid
+    while ng - ok > 1:
+        mid = (ng + ok) // 2
+        if f(mid, A, B) <= X:
+            ok = mid
         else:
-            high = mid
+            ng = mid
 
-    print(min(low, 10**9))
+    print(min(ok, 10**9))
 
 
 if __name__ == '__main__':
