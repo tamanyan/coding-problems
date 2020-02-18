@@ -1,4 +1,3 @@
-from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -50,25 +49,34 @@ l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
+show_flg = False
+# show_flg = True
 
-# show_flg = False
-show_flg = True
+
+def solve(T):
+    n, d = MI()
+    a = LI()
+    ans = a[0]
+    cur = 0
+
+    for i in range(1, n):
+        if a[i] > 0:
+            for j in range(a[i]):
+                if cur + i <= d:
+                    ans += 1
+                    cur += i
+                    # print(ans, cur, d)
+        if cur >= d:
+            break
+
+    print(ans)
 
 
 def main():
-    n = '0' + S()
-    N = len(n)
-    n = n[::-1]
-    n = [int(i) for i in n]
-    dp = [[0] * 2 for i in range(N+1)]
-    dp[0][1] = 1
+    T = I()
 
-    # print(n)
-    for i in range(N):
-        dp[i+1] = min(dp[i][0] + n[i], dp[i][1] + n[i])
-
-    # print(dp)
-    print(min(dp[N]))
+    for i in range(T):
+        solve(T)
 
 
 if __name__ == '__main__':

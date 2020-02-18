@@ -1,4 +1,3 @@
-from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -50,25 +49,38 @@ l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
+show_flg = False
+# show_flg = True
 
-# show_flg = False
-show_flg = True
+def distance(x1, y1, x2, y2):
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+
+def solve(T):
+    n, x = MI()
+    a = LI()
+    ans = 10**19
+
+    for i in range(n):
+        if x % a[i] == 0:
+            ans = min(ans, x // a[i])
+        else:
+            if x < a[i]:
+                ans = min(ans, 2)
+            else:
+                n = x // a[i]
+                n -= 1
+                ans = min(ans, n + 2)
+
+    print(ans)
+    # print(distance(0, 0, 2, math.sqrt(5)))
 
 
 def main():
-    n = '0' + S()
-    N = len(n)
-    n = n[::-1]
-    n = [int(i) for i in n]
-    dp = [[0] * 2 for i in range(N+1)]
-    dp[0][1] = 1
+    T = I()
 
-    # print(n)
-    for i in range(N):
-        dp[i+1] = min(dp[i][0] + n[i], dp[i][1] + n[i])
-
-    # print(dp)
-    print(min(dp[N]))
+    for i in range(T):
+        solve(T)
 
 
 if __name__ == '__main__':
