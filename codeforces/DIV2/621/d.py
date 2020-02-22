@@ -53,67 +53,74 @@ show_flg = False
 # show_flg = True
 
 
+def bfs(graph, initial, n):
+    dist = [-1] * (n + 1)
+    q = deque([initial])
+    visited = [False] * (n + 1)
+    visited[initial] = True
+    dist[initial] = 0
+
+    while len(q) != 0:
+        edge = q.popleft()
+        nxt = graph[edge]
+
+        for i, e in enumerate(nxt):
+            if visited[e] is False:
+                q.append(e)
+                dist[e] = dist[edge] + 1
+                visited[e] = True
+
+    return dist
+
+
 def main():
     n, m, k = MI()
     a = LI()
     graph = [[] for i in range(n+1)]
-    visited = [False] * (n + 1)
     is_special = {}
-    not_change = False
 
     for i in a:
         is_special[i] = True
 
     for i in range(m):
         x, y = map(int, input().split())
-        if x in is_special and y in is_special:
-            not_change = True
         graph[x].append(y)
         graph[y].append(x)
 
-    dist = [-1] * (n + 1)
-    dist = [-1] * (n + 1)
-    q = deque()
-    visited[1] = True
-    dist[1] = 0
-    visited_special = []
+    dist_1toN = bfs(graph, 1, n)
+    dist_Nto1 = bfs(graph, n, n)
 
-    if 1 in is_special:
-        q.append((1, [1]))
-    else:
-        q.append((1, []))
+    data = [None] * k
+    for i in range(len(a)):
+        x = dist_1toN[a[i]]
+        y = dist_Nto1[a[i]]
+        data[i] = (x, y)
 
-    while len(q) != 0:
-        edge, nodes = q.popleft()
-        nxt = graph[edge]
+    data.sort()
+    # a = [d[1] for d in data]
 
-        for i, e in enumerate(nxt):
-            if visited[e] is False:
-                _nodes = None
-                if e in is_special:
-                    _nodes = nodes + [e]
-                else:
-                    _nodes = nodes
-                q.append((e, _nodes))
-                dist[e] = dist[edge] + 1
-                visited[e] = True
-                if e == n:
-                    visited_special = _nodes
-                    q = deque()
-                    break
+    best = 0
+    for i in range(len(data)-1):
+        best = max(best, data[i][0] + 1 + data[i+1][1])
+    print(min(best, dist_1toN[n]))
 
-    if not_change:
-        print(dist[-1])
-    else:
-        distances = []
-        # print(visited_special)
-        a = visited_special
-        if len(visited_special) >= 2:
-            for i in range(len(a)-1):
-                distances.append(abs(dist[a[i+1]] - dist[a[i]]))
-            print(dist[-1] - max(min(distances) - 1, 0))
-        else:
-            print(dist[-1])
+    # data = [None] * k
+    # for i in range(len(a)):
+    #     x = dist_1toN[a[i]]
+    #     y = dist_Nto1[a[i]]
+    #     data[i] = (x - y, a[i])
+
+    # data.sort()
+    # a = [d[1] for d in data]
+
+    # best = 0
+    # mx = -10**9
+    # for i in range(len(a)):
+    #     best = max(best, mx + dist_Nto1[a[i]] + 1)
+    #     mx = max(mx, dist_1toN[a[i]])
+    #     # print(a[i], best, mx)
+
+    # print(min(dist_1toN[n], best))
 
 
 if __name__ == '__main__':
