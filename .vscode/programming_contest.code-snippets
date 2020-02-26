@@ -177,7 +177,7 @@
             "        graph[x].append(y)",
             "        graph[y].append(x)",
             "",
-            "    ret = bfs(graph, 1, N)",
+            "    ret = bfs(graph, 1)",
             "    print(ret)",
         ],
         "description": "BFS (graph)"
