@@ -56,7 +56,7 @@ show_flg = True
 show_flg = False
 
 
-# ナップサック問題 大きい
+# ナップザック問題
 def main():
     N, W = MI()
     dp = [0] * (W+1)
