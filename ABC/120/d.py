@@ -57,17 +57,6 @@ class UnionFind(object):
         self.parents = [-1] * n
 
     def find(self, x):
-        # if self.parents[x] < 0:
-        #     return x
-        # else:
-        #     ret = None
-        #     stack = [(x, self.parents[x])]
-
-        #     while True:
-        #         caller, cur = stack[-1]
-        #         nxt = self.parents[cur]
-        #         if nxt < 0:
-
         if self.parents[x] < 0:
             return x
         else:
