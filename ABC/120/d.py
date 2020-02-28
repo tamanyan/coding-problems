@@ -67,16 +67,6 @@ class UnionFind(object):
         #         caller, cur = stack[-1]
         #         nxt = self.parents[cur]
         #         if nxt < 0:
-        #             ret = cur
-        #             break
-        #         stack.append((cur, nxt))
-
-        #     while len(stack) > 0:
-        #         caller, _ = stack.pop()
-        #         self.parents[caller] = ret
-        #         ret = self.parents[caller]
-
-        #     return ret
 
         if self.parents[x] < 0:
             return x

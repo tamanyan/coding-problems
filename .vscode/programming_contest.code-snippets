@@ -270,4 +270,17 @@
         ],
         "description": "BFS (maze hexa)"
     },
+    "bit_full_search": {
+        "scope": "python",
+        "prefix": "bit_full_search",
+        "body": [
+            "for i in range(2 ** N):",
+            "    groups = set()",
+            "    for j in range(N):",
+            "        if ((i >> j) & 1):",
+            "            groups.add(j+1)",
+            "    pass",
+        ],
+        "description": "Bit Full Search"
+    },
 }
