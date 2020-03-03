@@ -70,29 +70,6 @@ def main():
         else:
             stack2.append((i+1, s[i]))
 
-    # if len(stack1) == len(stack2):
-    #     print(stack1, stack2)
-    #     # a = sorted([i[0] for i in stack1] + [i[0] for i in stack2])
-    #     min_bracket = min(len(stack1), len(stack2))
-    #     for i in range(min_bracket, 0, -1):
-    #         flag = True
-    #         a = []
-    #         for j in range(i):
-    #             b1 = stack1[j][0]
-    #             b2 = stack2[len(stack2) - j - 1][0]
-    #             a.append(b1)
-    #             a.append(b2)
-    #             flag = flag and (b1 < b2)
-    #             if flag is False:
-    #                 break
-    #         if flag:
-    #             ans.append((len(a), sorted(a)))
-    #             break
-    #     stack1 = []
-    #     stack2 = []
-
-    # print(stack1, stack2)
-
     min_bracket = min(len(stack1), len(stack2))
     for i in range(min_bracket, 0, -1):
         flag = True
