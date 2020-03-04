@@ -41,6 +41,11 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
+def print_matrix(mat):
+    for i in range(len(mat)):
+        print(*mat[i])
+
+
 YNL = {False: 'No', True: 'Yes'}
 YNU = {False: 'NO', True: 'YES'}
 MOD = 10**9+7

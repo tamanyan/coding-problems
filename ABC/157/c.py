@@ -42,7 +42,9 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-def MS(): return map(str, input().split())
+def print_matrix(mat):
+    for i in range(len(mat)):
+        print(*mat[i])
 
 
 YNL = {False: 'No', True: 'Yes'}

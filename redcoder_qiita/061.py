@@ -12,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def MI(): return map(int, input().split())
-
-
 def S(): return input()
+
+
+def MI(): return map(int, input().split())
 
 
 def MS(): return map(str, input().split())
@@ -61,45 +61,35 @@ show_flg = False
 # show_flg = True
 
 
+def warshall_floyd(d, n):
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j])
+    return d
+
+
 def main():
-    A = []
-    B = []
-    for i in range(3):
-        A.append(LI())
-        B.append([False] * 3)
+    N, M = MI()
+    d = [[IINF] * N for i in range(N)]
 
+    for i in range(M):
+        a, b, t = MI()
+        d[a-1][b-1] = t
+        d[b-1][a-1] = t
 
-    N = I()
-
-    b = []
     for i in range(N):
-        b.append(I())
+        d[i][i] = 0
 
-    for t in range(N):
-        for i in range(3):
-            for j in range(3):
-                if b[t] == A[i][j]:
-                    B[i][j] = True
+    d = warshall_floyd(d, N)
 
-    for i in range(3):
-        if B[i][0] is True and B[i][1] is True and B[i][2] is True:
-            print('Yes')
-            return
+    mn = IINF
+    for i in range(N):
+        nxt = max(d[i])
+        if mn > nxt:
+            mn = nxt
 
-    for i in range(3):
-        if B[0][i] is True and B[1][i] is True and B[2][i] is True:
-            print('Yes')
-            return
-
-    if B[0][0] is True and B[1][1] is True and B[2][2] is True:
-        print('Yes')
-        return
-
-    if B[0][2] is True and B[1][1] is True and B[0][2] is True:
-        print('Yes')
-        return
-
-    print('No')
+    print(mn)
 
 
 if __name__ == '__main__':
