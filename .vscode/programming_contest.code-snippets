@@ -49,6 +49,14 @@
         ],
         "description": "cpp_template"
     },
+    "array_n": {
+        "scope": "python",
+        "prefix": "array_n",
+        "body": [
+            "x = [0] * N"
+        ],
+        "description": "greatest common divisor (最大公約数)"
+    },
     "GCD": {
         "scope": "python",
         "prefix": "gcd",

@@ -62,17 +62,15 @@ def main():
     n, m = MI()
     a = LI()
     ans = 1
-    a = sorted(a)
-    a = [i % m for i in a]
-    c = Counter(a)
-    # print(a)
-    # print(c)
+    if n > m:
+        print(0)
+        return
 
+    ans = 1
     for i in range(n):
-        c[a[i]] -= 1
-        for j in range(m):
-            ans *= pow(abs(m - (a[i] - j)), c[j], m)
-
+        for j in range(i+1, n):
+            ans *= abs(a[i] - a[j])
+            ans %= m
     print(ans % m)
 
 
