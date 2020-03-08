@@ -57,24 +57,15 @@ show_flg = False
 
 
 def main():
-    N, M = MI()
-    s = [0] * M
-    c = [0] * M
+    A, B = MI()
 
-    for i in range(M):
-        s[i], c[i] = MI()
-
-    for i in range(1000):
-        num = str(i)
-
-        if len(num) != N:
-            continue
-
-        if all([len(num) >= s[j] and num[s[j]-1] == str(c[j]) for j in range(M)]):
-            print(num)
+    for N in range(1, 10**5):
+        if int(N * 0.08) == A and int(N * 0.1) == B:
+            print(N)
             return
 
     print(-1)
+    # print(low, high)
 
 
 if __name__ == '__main__':

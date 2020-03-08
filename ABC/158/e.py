@@ -57,24 +57,43 @@ show_flg = False
 
 
 def main():
-    N, M = MI()
-    s = [0] * M
-    c = [0] * M
+    N, P = MI()
+    s = S()
+    ans = 0
+    dic = [0] * N
+    dic2 = [0] * (N - 1)
 
-    for i in range(M):
-        s[i], c[i] = MI()
+    # for i in range(N):
+    #     for j in range(i+1, N+1):
+    #         # print(s[i:j])
+    #         if int(s[i:j]) % P == 0:
+    #             ans += 1
 
-    for i in range(1000):
-        num = str(i)
+    tmp = 0
+    for i in range(N + 1 - len(str(P))):
+        if int(s[i:i+len(str(P))]) % P == 0:
+            dic[i] = 1
+            tmp += 1
 
-        if len(num) != N:
+    for i in range(N + 1 - len(str(P)) - 1):
+        if s[i:i+1+len(str(P))][0] == '0':
             continue
 
-        if all([len(num) >= s[j] and num[s[j]-1] == str(c[j]) for j in range(M)]):
-            print(num)
-            return
+        if int(s[i:i+1+len(str(P))]) % P == 0:
+            dic2[i] = 1
+            tmp += 1
 
-    print(-1)
+    D = list(accumulate(dic))
+    D2 = list(accumulate(dic2))
+    # print(D, D2)
+    # print((D[-1] + D2[-1]) * 2)
+
+    # print(ans)
+    tmp = 0
+    tmp += (D[-1] * (D[-1] + 1)) // 2
+    tmp += (D2[-1] * (D2[-1] + 1)) // 2
+    print(tmp)
+    # print(tmp, dic)
 
 
 if __name__ == '__main__':

@@ -57,24 +57,42 @@ show_flg = False
 
 
 def main():
-    N, M = MI()
-    s = [0] * M
-    c = [0] * M
+    st = S()
+    Q = I()
+    queries = []
+    # print(st[0])
+    # s = [st[i] for i in range(len(st))]
+    s = deque()
 
-    for i in range(M):
-        s[i], c[i] = MI()
+    for i in range(len(st)):
+        s.append(st[i])
 
-    for i in range(1000):
-        num = str(i)
+    for i in range(Q):
+        queries.append(list(MS()))
 
-        if len(num) != N:
-            continue
+    op = True
 
-        if all([len(num) >= s[j] and num[s[j]-1] == str(c[j]) for j in range(M)]):
-            print(num)
-            return
+    for i in range(Q):
+        query = queries[i]
+        if len(query) == 1:
+            op = not op
+        else:
+            if (query[1] == '1' and op is True) or (query[1] == '2' and op is False):
+                s.appendleft(query[2])
+            elif (query[1] == '1' and op is False) or (query[1] == '2' and op is True):
+                s.append(query[2])
+            else:
+                exit(-1)
+                return
 
-    print(-1)
+    # print(op)
+    if op is True:
+        print(''.join(s))
+    else:
+        n = []
+        while len(s):
+            n.append(s.pop())
+        print(''.join(n))
 
 
 if __name__ == '__main__':

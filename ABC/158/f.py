@@ -57,24 +57,14 @@ show_flg = False
 
 
 def main():
-    N, M = MI()
-    s = [0] * M
-    c = [0] * M
+    N = I()
+    x = [0] * N
+    y = [0] * N
 
-    for i in range(M):
-        s[i], c[i] = MI()
+    for i in range(N):
+        x[i], y[i] = MI()
 
-    for i in range(1000):
-        num = str(i)
-
-        if len(num) != N:
-            continue
-
-        if all([len(num) >= s[j] and num[s[j]-1] == str(c[j]) for j in range(M)]):
-            print(num)
-            return
-
-    print(-1)
+    print()
 
 
 if __name__ == '__main__':

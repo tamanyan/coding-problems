@@ -36,6 +36,11 @@ def ItoS(nn): return chr(nn+97)
 def input(): return sys.stdin.readline().rstrip()
 
 
+def print_matrix(mat):
+    for i in range(len(mat)):
+        print(*mat)
+
+
 def show(*inp, end='\n'):
     if show_flg:
         print(*inp, end=end)
@@ -57,24 +62,24 @@ show_flg = False
 
 
 def main():
-    N, M = MI()
-    s = [0] * M
-    c = [0] * M
+    N = I()
+    dp = [0] * N
+    max_dp = [0] * N
+    min_dp = [10**9] * N
+    B = [0] * N
 
-    for i in range(M):
-        s[i], c[i] = MI()
+    for i in range(1, N):
+        B[i] = I() - 1
 
-    for i in range(1000):
-        num = str(i)
+    for i in range(N-1, -1, -1):
+        if max_dp[i] == 0:
+            dp[i] = 1
+        else:
+            dp[i] = max_dp[i] + min_dp[i] + 1
+        max_dp[B[i]] = max(max_dp[B[i]], dp[i])
+        min_dp[B[i]] = min(min_dp[B[i]], dp[i])
 
-        if len(num) != N:
-            continue
-
-        if all([len(num) >= s[j] and num[s[j]-1] == str(c[j]) for j in range(M)]):
-            print(num)
-            return
-
-    print(-1)
+    print(dp[0])
 
 
 if __name__ == '__main__':
