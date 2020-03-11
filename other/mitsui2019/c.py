@@ -53,14 +53,16 @@ show_flg = False
 
 def main():
     X = int(input())
-    n = X // 100
-    remain = X - n * 100
-    if remain <= 5 * n:
-        print(1)
-    else:
-        print(0)
-    # print(remain, n)
+    dp = [0] * (X + 1)
+    dp[0] = 1
 
+    for i in range(0, X):
+        if dp[i] == 1:
+            for k in range(100, 106):
+                if i + k < len(dp):
+                    dp[i+k] = 1
+
+    print(dp[X])
 
 
 if __name__ == '__main__':
