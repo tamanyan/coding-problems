@@ -56,6 +56,7 @@ show_flg = True
 show_flg = False
 
 
+# 個数制限付きナップザック問題
 def main():
     H, N = MI()
     A = [0] * N
