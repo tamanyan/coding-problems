@@ -1,4 +1,3 @@
-from decimal import *
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -37,13 +36,8 @@ def ItoS(nn): return chr(nn+97)
 def input(): return sys.stdin.readline().rstrip()
 
 
-def show(*inp, end='\n'):
-    if show_flg:
-        print(*inp, end=end)
-
-
-YNL = {False: 'No', True: 'Yes'}
-YNU = {False: 'NO', True: 'YES'}
+yn = {False: 'No', True: 'Yes'}
+YN = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
 IINF = 10**10
@@ -58,21 +52,9 @@ show_flg = False
 
 
 def main():
-    N = I()
     s = S()
-    N = len(s)
-    white = [0 if s[i] == '.' else 1 for i in range(N)]
-    count = sum(white)
-    lst = set()
-    lst.add(count)
 
-    for i in range(N-1, -1, -1):
-        if white[i]:
-            count -= 1
-        else:
-            count += 1
-        lst.add(count)
-    print(min(lst))
+    print(yn[s[2] == s[3] and s[4] == s[5]])
 
 
 if __name__ == '__main__':

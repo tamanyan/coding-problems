@@ -1,4 +1,3 @@
-from decimal import *
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -42,8 +41,13 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YNL = {False: 'No', True: 'Yes'}
-YNU = {False: 'NO', True: 'YES'}
+def print_matrix(mat):
+    for i in range(len(mat)):
+        print(*mat[i])
+
+
+yn = {False: 'No', True: 'Yes'}
+YN = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
 IINF = 10**10
@@ -59,20 +63,9 @@ show_flg = False
 
 def main():
     N = I()
-    s = S()
-    N = len(s)
-    white = [0 if s[i] == '.' else 1 for i in range(N)]
-    count = sum(white)
-    lst = set()
-    lst.add(count)
+    ans = 0
 
-    for i in range(N-1, -1, -1):
-        if white[i]:
-            count -= 1
-        else:
-            count += 1
-        lst.add(count)
-    print(min(lst))
+    print(ans)
 
 
 if __name__ == '__main__':

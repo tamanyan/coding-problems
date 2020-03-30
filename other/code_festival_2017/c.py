@@ -1,4 +1,3 @@
-from decimal import *
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -58,21 +57,27 @@ show_flg = False
 
 
 def main():
-    N = I()
     s = S()
-    N = len(s)
-    white = [0 if s[i] == '.' else 1 for i in range(N)]
-    count = sum(white)
-    lst = set()
-    lst.add(count)
+    d = deque(s)
+    ans = 0
 
-    for i in range(N-1, -1, -1):
-        if white[i]:
-            count -= 1
+    # print(d)
+
+    while len(d) > 1:
+        if d[0] == d[-1]:
+            d.popleft()
+            d.pop()
+        elif d[0] == 'x':
+            d.append('x')
+            ans += 1
+        elif d[-1] == 'x':
+            d.appendleft('x')
+            ans += 1
         else:
-            count += 1
-        lst.add(count)
-    print(min(lst))
+            print(-1)
+            return
+
+    print(ans)
 
 
 if __name__ == '__main__':

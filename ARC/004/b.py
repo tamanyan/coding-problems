@@ -1,4 +1,3 @@
-from decimal import *
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -13,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def S(): return input()
-
-
 def MI(): return map(int, input().split())
+
+
+def S(): return input()
 
 
 def MS(): return map(str, input().split())
@@ -42,37 +41,34 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YNL = {False: 'No', True: 'Yes'}
-YNU = {False: 'NO', True: 'YES'}
+YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
 IINF = 10**10
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
-sys.setrecursionlimit(10**6)
+# sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
+
+show_flg = True
 show_flg = False
-# show_flg = True
 
 
+# 全探索
 def main():
     N = I()
-    s = S()
-    N = len(s)
-    white = [0 if s[i] == '.' else 1 for i in range(N)]
-    count = sum(white)
-    lst = set()
-    lst.add(count)
+    d = [0] * N
 
-    for i in range(N-1, -1, -1):
-        if white[i]:
-            count -= 1
-        else:
-            count += 1
-        lst.add(count)
-    print(min(lst))
+    for i in range(N):
+        d[i] = I()
+
+    mx = sum(d)
+    mn = max(d) * 2 - mx
+
+    print(mx)
+    print(max(mn, 0))
 
 
 if __name__ == '__main__':
