@@ -41,46 +41,68 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = {False: 'No', True: 'Yes'}
+def print_matrix(mat):
+    for i in range(len(mat)):
+        print(*mat[i])
+
+
+YNL = {False: 'No', True: 'Yes'}
+YNU = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
 IINF = 10**10
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
-sys.setrecursionlimit(10**6)
+# sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
-show_flg = True
+# show_flg = True
 show_flg = False
 
+def cost(x, y, initial, N):
+    a = x[initial]
+    b = y[initial]
+    for i in range(N):
+        if i == initial:
+            continue
 
-# 個数制限付きナップザック問題
+    return 0
+
+
 def main():
-    H, N = MI()
-    A = [0] * N
-    B = [0] * N
-    dp = [IINF] * (H+1)
-    dp[0] = 0
+    N = I()
+    x = [0] * N
+    y = [0] * N
+    ans = 0
+    dist = [[None] * N for i in range(N)]
+
+    if N == 1:
+        print(1)
+        return
 
     for i in range(N):
-        A[i], B[i] = MI()
+        x[i], y[i] = MI()
 
     for i in range(N):
-        dp_next = [IINF] * (H+1)
-        for j in range(H+1):
-            dp_next[j] = min(dp_next[j], dp[j])
-            if j + A[i] <= H:
-                # print(j, dp_next[j + A[i]], dp[j + A[i]], dp[j] + B[i], dp_next[j] + B[i])
-                dp_next[j + A[i]] = min(dp_next[j + A[i]], dp[j + A[i]], dp_next[j] + B[i])
-            else:
-                # print(j, dp_next[H], dp[H], dp[j] + B[i], dp_next[j] + B[i])
-                dp_next[H] = min(dp_next[H], dp[H], dp_next[j] + B[i])
-        dp = dp_next
-        # print(dp_next)
-    print(dp[H])
+        for j in range(N):
+            if i == j:
+                continue
+            dist[i][j] = str(x[j] - x[i]) + "," + str(y[j] - y[i])
 
+    # print_matrix(dist)
+
+    c = defaultdict(int)
+    ans = 1
+    for i in range(N):
+        for j in range(N):
+            if dist[i][j] == None:
+                continue
+            c[dist[i][j]] += 1
+
+    mcost = max(c.values())
+    print(N - mcost)
 
 
 if __name__ == '__main__':

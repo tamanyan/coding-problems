@@ -12,10 +12,10 @@ import time
 def I(): return int(input())
 
 
-def MI(): return map(int, input().split())
-
-
 def S(): return input()
+
+
+def MI(): return map(int, input().split())
 
 
 def MS(): return map(str, input().split())
@@ -41,7 +41,8 @@ def show(*inp, end='\n'):
         print(*inp, end=end)
 
 
-YN = {False: 'No', True: 'Yes'}
+YNL = {False: 'No', True: 'Yes'}
+YNU = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
 IINF = 10**10
@@ -51,35 +52,30 @@ ts = time.time()
 sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-
-show_flg = True
 show_flg = False
+# show_flg = True
 
 
-# 個数制限付きナップザック問題
 def main():
-    H, N = MI()
-    A = [0] * N
-    B = [0] * N
-    dp = [IINF] * (H+1)
-    dp[0] = 0
+    N, K, M, R = MI()
+    s = [0] * N
+    total = 0
 
-    for i in range(N):
-        A[i], B[i] = MI()
+    for i in range(N-1):
+        s[i] = I()
 
-    for i in range(N):
-        dp_next = [IINF] * (H+1)
-        for j in range(H+1):
-            dp_next[j] = min(dp_next[j], dp[j])
-            if j + A[i] <= H:
-                # print(j, dp_next[j + A[i]], dp[j + A[i]], dp[j] + B[i], dp_next[j] + B[i])
-                dp_next[j + A[i]] = min(dp_next[j + A[i]], dp[j + A[i]], dp_next[j] + B[i])
-            else:
-                # print(j, dp_next[H], dp[H], dp[j] + B[i], dp_next[j] + B[i])
-                dp_next[H] = min(dp_next[H], dp[H], dp_next[j] + B[i])
-        dp = dp_next
-        # print(dp_next)
-    print(dp[H])
+    s = sorted(s, reverse=True)
+    total = sum(s[:K])
+
+    if total / K >= R:
+        print(0)
+        return
+
+    ans = K * R - sum(s[:K-1])
+    if ans > M:
+        print(-1)
+    else:
+        print(ans)
 
 
 
