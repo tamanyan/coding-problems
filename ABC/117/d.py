@@ -1,3 +1,4 @@
+from math import factorial
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
@@ -47,47 +48,44 @@ inf = float('inf')
 IINF = 10**10
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
-ts = time.time()
-# sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 
-# show_flg = True
-show_flg = False
+# show_flg = False
+show_flg = True
 
 
 def main():
-    s = S()
-    t = S()
-    s_pos = {k: set() for k in l_alp}
-    t_pos = {k: set() for k in l_alp}
+    N, K = MI()
+    A = LI()
+    LEN = 61
+    ans = 0
 
-    for i in range(len(s)):
-        s_pos[s[i]].add(i)
-        t_pos[t[i]].add(i)
+    for d in range(LEN, -2, -1):
+        if d != -1 and (K & (1 << d)) == False:
+            continue
 
-    for c in l_alp:
-        loc = s_pos[c]
-        candidates = set()
-        for i in loc:
-            candidates.add(t[i])
+        tmp = 0
+        for e in range(LEN, -1, -1):
+            mask = 1 << e
+            num = 0
+            for j in range(N):
+                if A[j] & mask > 0:
+                    num += 1
 
-        if len(candidates) > 1:
-            print('No')
-            return
+            if e > d:
+                if K & mask > 0:
+                    tmp += mask * (N - num)
+                else:
+                    tmp += mask * num
+            elif e == d:
+                tmp += mask * num;
+            else:
+                tmp += mask * max(num, N - num)
 
-    for c in l_alp:
-        loc = t_pos[c]
-        candidates = set()
-        for i in loc:
-            candidates.add(s[i])
+        ans = max(ans, tmp)
 
-        if len(candidates) > 1:
-            # print(c, candidates)
-            print('No')
-            return
-
-    print('Yes')
+    print(ans)
 
 
 if __name__ == '__main__':

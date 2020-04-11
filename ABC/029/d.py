@@ -58,23 +58,28 @@ show_flg = True
 def main():
     s = S()
     N = len(s)
+    SIZE = N+2
     n = [int(s[i]) for i in range(N)]
-    dp = [[[0 for j in range(10)]
+    dp = [[0 for j in range(SIZE)]
                 for smaller in range(2)]
-                for i in range(N + 1)]
-    dp[0][0][0] = 1
+    dp[0][0] = 1
 
-    for i in range(1, N):
+    for i in range(N):
+        dp_next = [[0 for j in range(SIZE)]
+                    for smaller in range(2)]
         for smaller in range(2):
-            for x in range(9 if smaller else n[i]):
-                if x == 1:
-                    dp[i+1][smaller or x < n[i]] += dp[i][smaller]
-                else:
-                    dp[i+1][smaller or x < n[i]] += dp[i][smaller]
-                print(x, dp)
+            for one in range(SIZE-1):
+                for x in range(10 if smaller else n[i] + 1):
+                    if x == 1:
+                        dp_next[smaller or x < n[i]][one+1] += dp[smaller][one]
+                    else:
+                        dp_next[smaller or x < n[i]][one] += dp[smaller][one]
+        dp = dp_next
 
-    print(dp[N][0] + dp[N][1])
-    # print(C(2 * m + n - 1, 2*m) % MOD)
+    ans = 0
+    for i in range(1, SIZE):
+        ans += (dp[0][i] + dp[1][i]) * i
+    print(ans)
 
 
 if __name__ == '__main__':
