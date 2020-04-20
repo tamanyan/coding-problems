@@ -337,7 +337,7 @@
             "        for i in range(n):",
             "            if not visited[i] and v == -1:",
             "               v = i",
-            "           elif not visited[i] and dist[i] < dist[v]:",
+            "            elif not visited[i] and dist[i] < dist[v]:",
             "               v = i",
             "",
             "        if v == -1:",
