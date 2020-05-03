@@ -50,7 +50,7 @@ yn = {False: 'No', True: 'Yes'}
 YN = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**10
+IINF = 10**19
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
@@ -62,11 +62,45 @@ show_flg = False
 
 
 def main():
-    N = I()
+    X, Y, A, B, C = MI()
+    p = LI()
+    q = LI()
+    r = LI()
     ans = 0
+    p = sorted(p, reverse=True)
+    q = sorted(q, reverse=True)
+    r = sorted(r, reverse=True)
+    p = p[:X]
+    q = q[:Y]
+    hp = []
+    hq = []
+    hr = []
 
-    print(ans)
+    for i in p:
+        heappush(hp, i)
 
+    for i in q:
+        heappush(hq, i)
+
+    for i in r:
+        heappush(hr, -i)
+
+    while len(hr) != 0:
+        vr = -heappop(hr)
+        vp = heappop(hp)
+        vq = heappop(hq)
+
+        if vp < vq and vr > vp:
+            heappush(hp, vr)
+            heappush(hq, vq)
+        elif vp >= vq and vr > vq:
+            heappush(hp, vp)
+            heappush(hq, vr)
+        else:
+            heappush(hp, vp)
+            heappush(hq, vq)
+
+    print(sum(hp) + sum(hq))
 
 if __name__ == '__main__':
     main()

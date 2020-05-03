@@ -45,7 +45,7 @@ YNL = {False: 'No', True: 'Yes'}
 YNU = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**10
+IINF = 10**19
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
@@ -55,45 +55,40 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = False
 # show_flg = True
 
-
+# https://algo-logic.info/abc158e/
 def main():
     N, P = MI()
-    s = S()
+    s = list(map(int, S()[::-1]))
     ans = 0
-    dic = [0] * N
-    dic2 = [0] * (N - 1)
+    cnts = [0] * P
+    cnts[0] = 1
+    A = [0] * N
+    D = [0] * N
 
-    # for i in range(N):
-    #     for j in range(i+1, N+1):
-    #         # print(s[i:j])
-    #         if int(s[i:j]) % P == 0:
-    #             ans += 1
+    if P == 2 or P == 5:
+        for i in range(N):
+            if s[i] % P == 0:
+                ans += N - i
+        print(ans)
+        return
 
-    tmp = 0
-    for i in range(N + 1 - len(str(P))):
-        if int(s[i:i+len(str(P))]) % P == 0:
-            dic[i] = 1
-            tmp += 1
+    for i in range(N):
+        d = s[i] * pow(10, i, P)
+        A[i] = d % P
+        if i == 0:
+            D[i] = A[i]
+        else:
+            D[i] = (D[i-1] + A[i]) % P
+        # sum_of_d = (sum_of_d + d) % p
+        # cnts[sum_of_d] += 1
 
-    for i in range(N + 1 - len(str(P)) - 1):
-        if s[i:i+1+len(str(P))][0] == '0':
-            continue
+    for d in D:
+        cnts[d] += 1
 
-        if int(s[i:i+1+len(str(P))]) % P == 0:
-            dic2[i] = 1
-            tmp += 1
+    for i in cnts:
+        ans += i * (i - 1) // 2
 
-    D = list(accumulate(dic))
-    D2 = list(accumulate(dic2))
-    # print(D, D2)
-    # print((D[-1] + D2[-1]) * 2)
-
-    # print(ans)
-    tmp = 0
-    tmp += (D[-1] * (D[-1] + 1)) // 2
-    tmp += (D2[-1] * (D2[-1] + 1)) // 2
-    print(tmp)
-    # print(tmp, dic)
+    print(ans)
 
 
 if __name__ == '__main__':

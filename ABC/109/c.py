@@ -50,15 +50,30 @@ sys.setrecursionlimit(10**6)
 show_flg = False
 # show_flg = True
 
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+def gcd_n(a, n):
+    ans = a[0]
+    for i in range(1, n):
+        ans = gcd(ans, a[i])
+    return ans
+
 
 def main():
     N, X = MI()
-    x = [abs(int(i) - X) for i in input().split()]
+    x = LI()
+    x.append(X)
+    x.sort()
+    d = []
 
-    ans = x[0]
-    for i in range(1, N):
-        ans = gcd(x[i], ans)
-    print(ans)
+    for i in range(1, N+1):
+        d.append(x[i] - x[i-1])
+
+    print(gcd_n(d, len(d)))
 
 
 if __name__ == '__main__':

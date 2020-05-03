@@ -44,7 +44,7 @@ def show(*inp, end='\n'):
 YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**10
+IINF = 10**19
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
@@ -58,16 +58,24 @@ show_flg = False
 
 # 全探索
 def main():
-    K, S = MI()
-    ans = 0
+    sx, sy, tx, ty = MI()
+    out = []
+    # 1st loop
+    out.append('U' * (ty - sy))
+    out.append('R' * (tx - sx))
+    out.append('D' * (ty - sy))
+    out.append('L' * (tx - sx))
+    # 2nd loop
+    out.append('L')
+    out.append('U' * ((ty - sy) + 1))
+    out.append('R' * ((tx - sx) + 1))
+    out.append('D')
+    out.append('R')
+    out.append('D' * ((ty - sy) + 1))
+    out.append('L' * ((tx - sx) + 1))
+    out.append('U')
 
-    for x in range(0, K+1):
-        for y in range(0, K+1):
-            z = S - x - y
-            if z >= 0 and z <= K:
-                ans += 1
-
-    print(ans)
+    print(''.join(out))
 
 
 if __name__ == '__main__':

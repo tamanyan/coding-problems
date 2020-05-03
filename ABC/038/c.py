@@ -50,7 +50,7 @@ yn = {False: 'No', True: 'Yes'}
 YN = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**10
+IINF = 10**19
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
@@ -64,17 +64,19 @@ show_flg = False
 def main():
     N = I()
     a = LI()
-    n = [0] * N
-    n[0] = 1
+    ans = 0
 
-    for i in range(1, N):
-        if a[i] > a[i-1]:
-            n[i] = n[i-1] + 1
-        else:
-            n[i] = 1
+    right = 0
+    for left in range(N):
+        while right < len(a) - 1 and a[right] < a[right+1]:
+            right += 1
+        # print('left', left, 'right', right)
+        ans += right - left + 1
+        if right == left:
+            right += 1
+        # print(ans)
 
-    print(sum(n))
-
+    print(ans)
 
 
 if __name__ == '__main__':

@@ -48,7 +48,7 @@ def MS(): return map(str, input().split())
 YN = {False: 'No', True: 'Yes'}
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**10
+IINF = 10**19
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()

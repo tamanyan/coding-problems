@@ -1,7 +1,7 @@
 from heapq import heappush, heappop, heapify
 from collections import deque, defaultdict, Counter
 import itertools
-from itertools import permutations, combinations, accumulate, product
+from itertools import permutations, combinations, accumulate, product, combinations_with_replacement
 import sys
 import bisect
 import string
@@ -48,7 +48,7 @@ yn = {False: 'No', True: 'Yes'}
 YN = {False: 'NO', True: 'YES'}
 MOD = 10**9+7
 inf = float('inf')
-IINF = 10**10
+IINF = 10**19
 l_alp = string.ascii_lowercase
 u_alp = string.ascii_uppercase
 ts = time.time()
