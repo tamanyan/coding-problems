@@ -41,15 +41,13 @@ show_flg = False
 
 
 def main():
+    K = I()
     s = S()
-    t = S()
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
-
-    print('Yes')
+    if len(s) <= K:
+        print(s)
+    else:
+        print(s[:K] + '...')
 
 
 if __name__ == '__main__':

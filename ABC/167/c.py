@@ -8,6 +8,7 @@ import string
 import math
 import time
 
+
 def I(): return int(input())
 def S(): return input()
 def MI(): return map(int, input().split())
@@ -20,6 +21,10 @@ def input(): return sys.stdin.readline().rstrip()
 def list2d(a, b, c): return [[c] * b for i in range(a)]
 def list3d(a, b, c, d): return [[[d] * c for j in range(b)] for i in range(a)]
 def list4d(a, b, c, d, e): return [[[[e] * d for j in range(c)] for j in range(b)] for i in range(a)]
+def print_matrix(mat):
+    for i in range(len(mat)):
+        print(*['IINF' if v == IINF else "{:0=4}".format(v) for v in mat[i]])
+
 
 yn = {False: 'No', True: 'Yes'}
 YN = {False: 'NO', True: 'YES'}
@@ -31,32 +36,60 @@ u_alp = string.ascii_uppercase
 ts = time.time()
 sys.setrecursionlimit(10**6)
 nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-
 show_flg = False
-# show_flg = True)
+# show_flg = True
+
+def cmb(n, r):
+    if n - r < r: r = n - r
+    if r == 0: return 1
+    if r == 1: return n
+
+    numerator = [n - r + k + 1 for k in range(r)]
+    denominator = [k + 1 for k in range(r)]
+
+    for p in range(2,r+1):
+        pivot = denominator[p - 1]
+        if pivot > 1:
+            offset = (n - r) % p
+            for k in range(p-1,r,p):
+                numerator[k - offset] /= pivot
+                denominator[k] /= pivot
+
+    result = 1
+    for k in range(r):
+        if numerator[k] > 1:
+            result *= int(numerator[k])
+
+    return result
+
 
 def main():
-    N, M = MI()
-    H = LI()
-    A = [0] * M
-    B = [0] * M
-
-    H_G = [-1 for i in range(N)]
-
-    for i in range(M):
-        A[i], B[i] = MI()
-
-    for i in range(M):
-        H_G[A[i]-1] = max(H_G[A[i]-1], H[B[i]-1])
-        H_G[B[i]-1] = max(H_G[B[i]-1], H[A[i]-1])
-
-    ans = 0
+    N, M, X_SUM = MI()
+    C = [0] * N
+    A = [None] * N
 
     for i in range(N):
-        if H[i] > H_G[i]:
-            ans += 1
+        b = LI()
+        C[i] = b[0]
+        A[i] = b[1:]
 
-    print(ans)
+    ans = 10**19
+    for i in range(1, N+1):
+        for select_idx in combinations(range(N), i):
+            X = [0] * M
+            price = 0
+            for book_idx in select_idx:
+                for x_idx in range(M):
+                    X[x_idx] += A[book_idx][x_idx]
+                price += C[book_idx]
+
+            if all([x >= X_SUM for x in X]):
+                ans = min(ans, price)
+
+    if ans == 10**19:
+        print(-1)
+    else:
+        print(ans)
 
 
 if __name__ == '__main__':

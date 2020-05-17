@@ -8,7 +8,6 @@ import string
 import math
 import time
 
-
 def I(): return int(input())
 def S(): return input()
 def MI(): return map(int, input().split())
@@ -39,18 +38,34 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = False
 # show_flg = True
 
-
 def main():
-    s = S()
-    t = S()
+    N, M = MI()
+    edges = []
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
+    for i in range(N-1+M):
+        a, b = MI()
+        edges.append((a-1, b-1))
 
-    print('Yes')
+    in_cnt = defaultdict(int)
+    outs = defaultdict(list)
+    for a, b in edges:
+        in_cnt[b] += 1
+        outs[a].append(b)
 
+    res = [0] * N
+    queue = deque([i for i in range(N) if in_cnt[i] == 0])
+    while len(queue) > 0:
+        v = queue.popleft()
+        # print(v + 1)
+        # res.append(v)
+        for nxt_v in outs[v]:
+            # print('v', v + 1, 'nxt_v', nxt_v + 1)
+            in_cnt[nxt_v] -= 1
+            if in_cnt[nxt_v] == 0:
+                res[nxt_v] = v + 1
+                # print(res, nxt_v + 1, 'p', v + 1)
+                queue.append(nxt_v)
+    print(*res)
 
 if __name__ == '__main__':
     main()

@@ -39,17 +39,45 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = False
 # show_flg = True
 
+def bfs(graph, initial):
+    n = len(graph) - 1
+    dist = [-1] * (n + 1)
+    q = deque([initial])
+    visited = [False] * (n + 1)
+    visited[initial] = True
+
+    while len(q) != 0:
+        edge = q.popleft()
+        nxt = graph[edge]
+
+        for i, e in enumerate(nxt):
+            if visited[e] is False:
+                q.append(e)
+                dist[e] = edge
+                visited[e] = True
+
+    return dist
+
 
 def main():
-    s = S()
-    t = S()
+    N, M = MI()
+    graph = [[] for i in range(N+1)]
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
+    for i in range(M):
+        x, y = MI()
+        graph[x].append(y)
+        graph[y].append(x)
+
+    ret = bfs(graph, 1)
+
+    for i in range(2, len(ret)):
+        if ret[i] == -1:
             print('No')
             return
 
     print('Yes')
+    for i in range(2, len(ret)):
+        print(ret[i])
 
 
 if __name__ == '__main__':

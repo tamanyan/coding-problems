@@ -39,17 +39,22 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = False
 # show_flg = True
 
+def clockangles(hour, minute):
+    ans = abs((hour * 30 + minute * 0.5) - (minute * 6))
+    return min(360-ans,ans)
+
 
 def main():
-    s = S()
-    t = S()
+    A, B, H, M = MI()
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
+    if M == 0 and H == 0:
+        print(abs(A - B))
+        return
 
-    print('Yes')
+    d = clockangles(H, M)
+    r = math.radians(d)
+    ans = A**2 + B**2 - 2 * A * B * math.cos(r)
+    print(math.sqrt(ans))
 
 
 if __name__ == '__main__':

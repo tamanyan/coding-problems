@@ -20,6 +20,9 @@ def input(): return sys.stdin.readline().rstrip()
 def list2d(a, b, c): return [[c] * b for i in range(a)]
 def list3d(a, b, c, d): return [[[d] * c for j in range(b)] for i in range(a)]
 def list4d(a, b, c, d, e): return [[[[e] * d for j in range(c)] for j in range(b)] for i in range(a)]
+def print_matrix(mat):
+    for i in range(len(mat)):
+        print(*['IINF' if v == IINF else "{:0=4}".format(v) for v in mat[i]])
 
 
 yn = {False: 'No', True: 'Yes'}
@@ -56,28 +59,18 @@ def main():
     s = list(map(int, S()[::-1]))
     N = len(s)
     P = 2019
-    ans = 0
     cnts = [0] * P
     cnts[0] = 1
-    A = [0] * N
-    D = [0] * N
+    sum_of_digits = 0
 
     for i in range(N):
-        d = s[i] * pow(10, i, P)
-        A[i] = d % P
-        if i == 0:
-            D[i] = A[i]
-        else:
-            D[i] = (D[i-1] + A[i]) % P
-        # sum_of_d = (sum_of_d + d) % p
-        # cnts[sum_of_d] += 1
+        sum_of_digits += s[i] * pow(10, i, P)
+        sum_of_digits %= 2019
+        cnts[sum_of_digits] += 1
 
-    for d in D:
-        cnts[d] += 1
-
-    for i in cnts:
-        ans += i * (i - 1) // 2
-
+    ans = 0
+    for i in range(P):
+        ans += cnts[i] * (cnts[i]-1) // 2
     print(ans)
 
 

@@ -8,7 +8,6 @@ import string
 import math
 import time
 
-
 def I(): return int(input())
 def S(): return input()
 def MI(): return map(int, input().split())
@@ -21,10 +20,6 @@ def input(): return sys.stdin.readline().rstrip()
 def list2d(a, b, c): return [[c] * b for i in range(a)]
 def list3d(a, b, c, d): return [[[d] * c for j in range(b)] for i in range(a)]
 def list4d(a, b, c, d, e): return [[[[e] * d for j in range(c)] for j in range(b)] for i in range(a)]
-def print_matrix(mat):
-    for i in range(len(mat)):
-        print(*['IINF' if v == IINF else "{:0=4}".format(v) for v in mat[i]])
-
 
 yn = {False: 'No', True: 'Yes'}
 YN = {False: 'NO', True: 'YES'}
@@ -41,15 +36,40 @@ show_flg = False
 
 
 def main():
-    s = S()
-    t = S()
+    N = I()
+    A = LI()
+    B = LI()
+    ans = IINF
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
+    for idxs in permutations([i for i in range(N)]):
+        idxs = list(idxs)
+        front = []
+        v = []
+        for pos in range(len(idxs)):
+            idx = idxs[pos]
+            if pos % 2 == 0 and idx % 2 == 0:
+                front.append(A[idx])
+                v.append('A' + str(idx))
+            elif pos % 2 == 0 and idx % 2 == 1:
+                front.append(B[idx])
+                v.append('B' + str(idx))
+            elif pos % 2 == 1 and idx % 2 == 0:
+                front.append(B[idx])
+                v.append('B' + str(idx))
+            elif pos % 2 == 1 and idx % 2 == 1:
+                front.append(A[idx])
+                v.append('A' + str(idx))
+        print(v)
 
-    print('Yes')
+        if all([front[i-1] <= front[i] for i in range(1, N)]):
+            swap_count = sum([abs(pos - idxs[pos]) for pos in range(len(idxs))]) // 2
+            ans = min(ans, swap_count)
+
+    if ans == IINF:
+        print(-1)
+    else:
+        print(ans)
+
 
 
 if __name__ == '__main__':

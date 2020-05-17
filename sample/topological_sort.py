@@ -8,7 +8,6 @@ import string
 import math
 import time
 
-
 def I(): return int(input())
 def S(): return input()
 def MI(): return map(int, input().split())
@@ -21,10 +20,6 @@ def input(): return sys.stdin.readline().rstrip()
 def list2d(a, b, c): return [[c] * b for i in range(a)]
 def list3d(a, b, c, d): return [[[d] * c for j in range(b)] for i in range(a)]
 def list4d(a, b, c, d, e): return [[[[e] * d for j in range(c)] for j in range(b)] for i in range(a)]
-def print_matrix(mat):
-    for i in range(len(mat)):
-        print(*['IINF' if v == IINF else "{:0=4}".format(v) for v in mat[i]])
-
 
 yn = {False: 'No', True: 'Yes'}
 YN = {False: 'NO', True: 'YES'}
@@ -41,16 +36,30 @@ show_flg = False
 
 
 def main():
-    s = S()
-    t = S()
+    V, E = MI()
+    edges = []
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
+    for i in range(E):
+        edges.append(tuple(MI()))
 
-    print('Yes')
+    in_cnt = defaultdict(int)
+    outs = defaultdict(list)
+    for a, b in edges:
+        in_cnt[b] += 1
+        outs[a].append(b)
 
+    res = []
+    queue = deque([i for i in range(V) if in_cnt[i] == 0])
+    while len(queue) != 0:
+        v = queue.popleft()
+        res.append(v)
+        for nxt_v in outs[v]:
+            in_cnt[nxt_v] -= 1
+            if in_cnt[nxt_v] == 0:
+                queue.append(nxt_v)
+
+    for i in range(V):
+        print(res[i])
 
 if __name__ == '__main__':
     main()

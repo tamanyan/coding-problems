@@ -42,14 +42,14 @@ show_flg = False
 
 def main():
     s = S()
-    t = S()
+    n = int(s[-1])
+    if n in [2, 4, 5, 7, 9]:
+        print('hon')
+    elif n in [0, 1, 6, 8]:
+        print('pon')
+    else:
+        print('bon')
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
-
-    print('Yes')
 
 
 if __name__ == '__main__':

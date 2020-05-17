@@ -39,17 +39,56 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = False
 # show_flg = True
 
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
 
 def main():
-    s = S()
-    t = S()
+    N = I()
+    zero = 0
+    cnts = defaultdict(int)
+    used = set()
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
+    for i in range(N):
+        a, b = MI()
+        if a == 0 and b == 0:
+            zero += 1
+            continue
 
-    print('Yes')
+        g = gcd(abs(a), abs(b))
+        a = a // g
+        b = b // g
+        if b < 0:
+            a = -a
+            b = -b
+        cnts[(a, b)] += 1
+
+    # print(cnts)
+
+    ans = 1
+    for key, c in cnts.items():
+        if key in used:
+            continue
+        a, b = key
+        if a > 0:
+            rev = (-b, a)
+        else:
+            rev = (b, -a)
+
+        if rev in cnts:
+            # keyの集合から一個以上選ぶ + revの集合から一個以上選ぶ + どれも選ばない
+            ans *= (pow(2, cnts[key], MOD) - 1) + (pow(2, cnts[rev], MOD) - 1) + 1
+            # print(key, rev, ans)
+            ans %= MOD
+            used.add(rev)
+        else:
+            ans *= pow(2, cnts[key], MOD)
+
+    ans += zero
+    ans -= 1
+    print(ans % MOD)
 
 
 if __name__ == '__main__':

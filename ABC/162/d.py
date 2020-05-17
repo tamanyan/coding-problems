@@ -66,59 +66,29 @@ def c(i, j, k):
 def main():
     N = I()
     s = S()
-    # N = 2000
-    # s = 'R' * 2000
-    R = [0] * (N+1)
-    G = [0] * (N+1)
-    B = [0] * (N+1)
+    r, g, b = 0, 0, 0
 
     for i in range(N):
         if s[i] == 'R':
-            R[i] += 1
+            r += 1
         elif s[i] == 'G':
-            G[i] += 1
-        elif s[i] == 'B':
-            B[i] += 1
-        R[i+1] = R[i]
-        G[i+1] = G[i]
-        B[i+1] = B[i]
+            g += 1
+        else:
+            b += 1
 
-    ans = 0
+    all_c = r * g * b
+    sub = 0
+
     for i in range(N):
-        for j in range(i, N):
-            if s[i] == 'R' and s[j] == 'G' or s[i] == 'G' and s[j] == 'R':
-                nxt = j - i + j
-                if nxt >= len(s):
-                    ans += B[N] - B[j]
-                elif s[nxt] != 'B':
-                    ans += B[N] - B[j]
-                else:
-                    ans += B[N] - B[j]
-                    ans -= 1
-            elif s[i] == 'R' and s[j] == 'B' or s[i] == 'B' and s[j] == 'R':
-                nxt = j - i + j
-                if nxt >= len(s):
-                    ans += G[N] - G[j]
-                elif s[nxt] != 'G':
-                    ans += G[N] - G[j]
-                else:
-                    ans += G[N] - G[j]
-                    ans -= 1
-            elif s[i] == 'B' and s[j] == 'G' or s[i] == 'G' and s[j] == 'B':
-                nxt = j - i + j
-                if nxt >= len(s):
-                    ans += R[N] - R[j]
-                elif s[nxt] != 'R':
-                    ans += R[N] - R[j]
-                else:
-                    ans += R[N] - R[j]
-                    ans -= 1
+        for j in range(i+1, N):
+            k = (j - i) + j
+            if k >= N or s[i] == s[j] or s[k] == s[i] or s[j] == s[k]:
+                continue
+            # 全部異なる、等差である
+            sub += 1
 
-
-    print(ans)
-    # print(R)
-    # print(G)
-    # print(B)
+    # 全部異なる、等差でないを求める
+    print(all_c - sub)
 
 
 if __name__ == '__main__':

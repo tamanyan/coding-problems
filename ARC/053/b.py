@@ -1,4 +1,5 @@
 from heapq import heappush, heappop, heapify
+import heapq
 from collections import deque, defaultdict, Counter
 import itertools
 from itertools import permutations, combinations, accumulate, product, combinations_with_replacement
@@ -39,17 +40,42 @@ nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 show_flg = False
 # show_flg = True
 
-
 def main():
     s = S()
-    t = S()
+    c = Counter(s)
+    odd_count = 0
+    odd_total = 0
+    even_total = 0
 
-    for i in range(len(s)):
-        if s[i] != t[i]:
-            print('No')
-            return
+    for alpha, count in c.items():
+        if count % 2 == 1:
+            odd_total += count
+            odd_count += 1
+        else:
+            even_total += count
 
-    print('Yes')
+    if odd_count == 0:
+        print(even_total)
+        return
+
+    print(2 * ((len(s) - odd_count) // (2 * odd_count)) + 1)
+    # v = odd_total // odd_count
+    # if v % 2 == 0:
+    #     v -= 1
+    # remain = odd_total - v * odd_count
+    # odd = [v] * odd_count
+    # odd = [odd[i] + 1 if i < remain else odd[i] for i in range(len(odd))]
+    # print(odd, odd_count, c)
+
+    # # print(even_total)
+    # while even_total > 0:
+    #     mn = heappop(odd)
+    #     mn += 2
+    #     even_total -= 2
+    #     heappush(odd, mn)
+
+    # print(odd)
+    # print(heappop(odd))
 
 
 if __name__ == '__main__':

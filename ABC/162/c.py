@@ -64,23 +64,6 @@ def gcd(a, b):
     return gcd(b, a % b)
 
 
-def gcd_n(a, n):
-    ans = a[0]
-    for i in range(1, n):
-        ans = gcd(ans, a[i])
-    return ans
-
-
-def divisor(n):
-    ret = []
-    for i in range(1, int(n**0.5)+1):
-        if n % i == 0:
-            ret.append(i)
-            if n // i != i:
-                ret.append(n // i)
-    return ret
-
-
 def main():
     K = I()
     ans = 0
@@ -88,8 +71,7 @@ def main():
     for a in range(1, K+1):
         for b in range(1, K+1):
             for c in range(1, K+1):
-                # print(a, b, c, gcd_n([a, b, c], 3))
-                ans += gcd_n([a, b, c], 3)
+                ans += gcd(gcd(a, b), c)
 
     print(ans)
 
