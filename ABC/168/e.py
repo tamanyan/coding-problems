@@ -48,47 +48,91 @@ def gcd(a, b):
 def main():
     N = I()
     zero = 0
-    cnts = defaultdict(int)
+    plus_Ai_Bi = defaultdict(int)
+    minus_Bj_Aj = defaultdict(int)
+    zero_cnt = 0
     used = set()
 
     for i in range(N):
         a, b = MI()
+
         if a == 0 and b == 0:
-            zero += 1
+            zero_cnt += 1
             continue
 
-        g = gcd(abs(a), abs(b))
-        a = a // g
-        b = b // g
-        if b < 0:
-            a = -a
-            b = -b
-        cnts[(a, b)] += 1
+        gcdab = gcd(abs(a), abs(b))
+        a = a // gcdab
+        b = b // gcdab
 
-    # print(cnts)
+        if a > 0 and b > 0:
+            # pos
+            plus_Ai_Bi[(a, b)] += 1
+            # neg
+            minus_Bj_Aj[(-b, a)] += 1
+        elif a > 0 and b < 0:
+            # neg
+            plus_Ai_Bi[(-a, -b)] += 1
+            # pos
+            minus_Bj_Aj[(-b, a)] += 1
+        elif a < 0 and b > 0:
+            # neg
+            plus_Ai_Bi[(a, b)] += 1
+            # pos
+            minus_Bj_Aj[(b, -a)] += 1
+        elif a == 0:
+            # neg
+            plus_Ai_Bi[(a, abs(b))] += 1
+            # pos
+            minus_Bj_Aj[(abs(b), a)] += 1
+        elif b == 0:
+            # neg
+            plus_Ai_Bi[(abs(a), b)] += 1
+            # pos
+            minus_Bj_Aj[(b, abs(a))] += 1
+        else:
+            # pos
+            plus_Ai_Bi[(-a, -b)] += 1
+            # neg
+            minus_Bj_Aj[(b, -a)] += 1
 
+    # print(plus_Ai_Bi)
+    # print(minus_Bj_Aj)
     ans = 1
-    for key, c in cnts.items():
-        if key in used:
+
+    for pair, cnt1 in plus_Ai_Bi.items():
+        a, b = pair
+        if pair in used:
             continue
-        a, b = key
-        if a > 0:
-            rev = (-b, a)
-        else:
-            rev = (b, -a)
 
-        if rev in cnts:
-            # keyの集合から一個以上選ぶ + revの集合から一個以上選ぶ + どれも選ばない
-            ans *= (pow(2, cnts[key], MOD) - 1) + (pow(2, cnts[rev], MOD) - 1) + 1
-            # print(key, rev, ans)
+        if pair in minus_Bj_Aj:
+            cnt2 = minus_Bj_Aj[pair]
+            group1 = pow(2, cnt1, MOD) - 1
+            group2 = pow(2, cnt2, MOD) - 1
+            ans *= group1 + group2 + 1
             ans %= MOD
-            used.add(rev)
-        else:
-            ans *= pow(2, cnts[key], MOD)
 
-    ans += zero
-    ans -= 1
-    print(ans % MOD)
+            if a > 0 and b > 0:
+                # minus_Bj_Aj[(-b, a)] += 1
+                used.add((-b, a))
+            elif a > 0 and b < 0:
+                # minus_Bj_Aj[(-b, a)] += 1
+                used.add((-b, a))
+            elif a < 0 and b > 0:
+                # minus_Bj_Aj[(b, -a)] += 1
+                used.add((b, -a))
+            elif a == 0:
+                used.add((abs(b), a))
+            elif b == 0:
+                used.add((b, abs(a)))
+            else:
+                # minus_Bj_Aj[(b, -a)] += 1
+                used.add((b, -a))
+            # print(pair, ans)
+        else:
+            ans *= pow(2, cnt1, MOD)
+            ans %= MOD
+
+    print((ans - 1 + zero_cnt) % MOD)
 
 
 if __name__ == '__main__':

@@ -61,18 +61,18 @@ def main():
     d = deque(s)
     ans = 0
 
-    # print(d)
-
     while len(d) > 1:
-        if d[0] == d[-1]:
-            d.popleft()
-            d.pop()
-        elif d[0] == 'x':
-            d.append('x')
+        l = d.popleft()
+        r = d.pop()
+
+        if l == r:
+            continue
+        elif l == 'x':
             ans += 1
-        elif d[-1] == 'x':
-            d.appendleft('x')
+            d.append(r)
+        elif r == 'x':
             ans += 1
+            d.appendleft(l)
         else:
             print(-1)
             return
